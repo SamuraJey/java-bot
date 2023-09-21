@@ -1,5 +1,12 @@
 package ru.duckteam.javatgbot;
 
 public class BotRequest {
-    return null;
+    private String message = new String();
+    public BotRequest(String message){
+        this.message = message;
+    }
+
+    public String getMessage(){
+        return message;
+    }
 }
