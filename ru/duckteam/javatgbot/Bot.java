@@ -1,5 +1,10 @@
 package ru.duckteam.javatgbot;
 
+import ru.duckteam.javatgbot.console.ConsoleAnswerWriter;
+import ru.duckteam.javatgbot.console.ConsoleInputReader;
+import ru.duckteam.javatgbot.logic.BotRequest;
+import ru.duckteam.javatgbot.logic.EchoMessageHandler;
+
 public class Bot {
     
     public static void main(String[] args) {
