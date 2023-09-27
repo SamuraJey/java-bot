@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import ru.duckteam.javatgbot.logic.CopyMessageHandler;
 
 public class Bot extends TelegramLongPollingBot {
 
@@ -32,7 +33,8 @@ public class Bot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         User user = update.getMessage().getFrom();
         Long userId = user.getId();
-        copyMessage(userId,message.getMessageId());
+        CopyMessageHandler handler = new CopyMessageHandler();
+        handler.copyMessage(userId,message.getMessageId());
         //sendText(userId,message.getText());
         System.out.println(user.getFirstName() + " wrote " + message.toString());
     }
@@ -46,12 +48,4 @@ public class Bot extends TelegramLongPollingBot {
         return "BOT_TOKEN";
     }
 
-    public void copyMessage(Long who, Integer msgId){
-        CopyMessage cm = CopyMessage.builder().fromChatId(who.toString()).chatId(who.toString()).messageId(msgId).build();
-        try {
-            MessageId execute = execute(cm);
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
