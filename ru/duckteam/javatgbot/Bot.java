@@ -43,7 +43,7 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public String getBotToken() {
-        return "6097088993:AAET05S0Vg6A6BDVeOqnKm4D40Frhsqn-gA";
+        return "BOT_TOKEN";
     }
 
     public void copyMessage(Long who, Integer msgId){
