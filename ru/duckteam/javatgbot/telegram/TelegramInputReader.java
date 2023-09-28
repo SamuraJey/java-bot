@@ -6,8 +6,6 @@ import ru.duckteam.javatgbot.InputReader;
 import ru.duckteam.javatgbot.logic.BotRequest;
 
 public class TelegramInputReader implements InputReader {
-    private Bot bot;
-
     @Override
     public BotRequest getUserInput(Update update, Bot bot) {
         var message = update.getMessage();
@@ -15,9 +13,7 @@ public class TelegramInputReader implements InputReader {
         var userId = userName.getId();
         var chatId = message.getChatId();
         var messageId = message.getMessageId();
-        this.bot = bot;
 
         return new BotRequest(userName, userId, chatId, messageId, bot);
     }
-
 }

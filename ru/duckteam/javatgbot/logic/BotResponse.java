@@ -13,14 +13,14 @@ public final class BotResponse {
 //        this.message = message;
 //    }
 
-    public BotResponse(String userName, String userId, String chatId, String messageId) {
+    public BotResponse(String userName, Long userId, Long chatId, Integer messageId) {
         this.userName = userName;
-        this.userId = Long.valueOf(userId);
-        this.chatId = Long.valueOf(chatId);
-        this.messageId = Integer.valueOf(messageId);
+        this.userId = userId;
+        this.chatId = chatId;
+        this.messageId = messageId;
     }
 
-    public String[] getAnswerDetails(){
+   /* public String[] getAnswerDetails(){
         final String[] answerDetails = new String[4];
         answerDetails[0] = userName; // String
         answerDetails[1] = userId.toString(); // Long
@@ -28,6 +28,23 @@ public final class BotResponse {
         answerDetails[3] = messageId.toString(); // Integer
 
         return answerDetails;
+    }*/
+
+    public String getUserName(){
+        return userName;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Long getChatId(){
+        return chatId;
+    }
+
+    public Integer getMessageId(){
+        return messageId;
+    }
+
 }
 

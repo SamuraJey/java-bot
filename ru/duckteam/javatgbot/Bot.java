@@ -2,7 +2,9 @@ package ru.duckteam.javatgbot;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.BotSession;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -18,8 +20,6 @@ public class Bot extends TelegramLongPollingBot {
     public static void main(String[] args) throws TelegramApiException {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         BotSession botSession = botsApi.registerBot(new Bot());
-
-
     }
 
     @Override
@@ -27,10 +27,10 @@ public class Bot extends TelegramLongPollingBot {
         InputReader reader = new TelegramInputReader();
         AnswerWriter writer = new ConsoleAnswerWriter();
         MessageHandler handler = new EchoMessageHandler();
-        var msg = update.getMessage();
-        var user = msg.getFrom();
+        Message msg = update.getMessage();
+        User user = msg.getFrom();
         System.out.println(user.getFirstName() + " wrote " + msg.getText());
-        BotRequest request = reader.getUserInput(update, this);
+        BotRequest request = reader.getUserInput(update,this);
         handler.handle(request, writer);
     }
 

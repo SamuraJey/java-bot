@@ -23,7 +23,7 @@ public final class BotRequest {
         this.bot = bot;
     }
 
-    public String[] getMessageDetails(){
+    /*public String[] getMessageDetails(){
         final String[] msgDetails = new String[4];
         msgDetails[0] = userName.getUserName(); // String
         msgDetails[1] = userId.toString(); // Long
@@ -31,6 +31,22 @@ public final class BotRequest {
         msgDetails[3] = messageId.toString(); // Integer
 
         return msgDetails;
+    }*/
+
+    public String getUserName(){
+        return userName.getUserName();
+    }
+
+    public Long getUserId(){
+        return userId;
+    }
+
+    public  Long getChatId(){
+        return chatId;
+    }
+
+    public Integer getMessageId() {
+        return messageId;
     }
 
     public Bot getBot(){

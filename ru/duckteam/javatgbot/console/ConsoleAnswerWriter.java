@@ -2,6 +2,7 @@ package ru.duckteam.javatgbot.console;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.CopyMessage;
+import org.telegram.telegrambots.meta.api.objects.MessageId;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.Bot;
@@ -17,11 +18,10 @@ import java.io.Serializable;
 
 public class ConsoleAnswerWriter implements AnswerWriter {
     public void writeAnswer(BotResponse response, Bot bot) {
-        String[] answerDetails = response.getAnswerDetails();
-        String userName = answerDetails[0];
-        long userId = Long.parseLong(answerDetails[1]);
-        long chatId = Long.parseLong(answerDetails[2]);
-        int messageId = Integer.parseInt(answerDetails[3]);
+        //String userName = response.getUserName();
+        long userId = response.getUserId();
+        //long chatId = response.getChatId();
+        int messageId = response.getMessageId();
 
         CopyMessage cm = CopyMessage.builder()
                 .fromChatId(userId)  //We copy from the user
