@@ -1,22 +1,13 @@
-package ru.duckteam.javatgbot.console;
+package ru.duckteam.javatgbot.telegram;
 
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.CopyMessage;
-import org.telegram.telegrambots.meta.api.objects.MessageId;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.Bot;
 import ru.duckteam.javatgbot.logic.BotResponse;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.CopyMessage;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.io.Serializable;
 
 
-public class ConsoleAnswerWriter implements AnswerWriter {
+public class TelegramAnswerWriter implements AnswerWriter {
     public void writeAnswer(BotResponse response, Bot bot) {
         //String userName = response.getUserName();
         long userId = response.getUserId();
@@ -35,3 +26,4 @@ public class ConsoleAnswerWriter implements AnswerWriter {
         }
     }
 }
+
