@@ -5,9 +5,11 @@ import ru.duckteam.javatgbot.MessageHandler;
 
 public class EchoMessageHandler implements MessageHandler {
     public void handle(BotRequest request, AnswerWriter writer) {
-        String message = request.getMessage();
-        BotResponse response = new BotResponse(message);
-        writer.writeAnswer(response);
+        BotResponse response = new BotResponse(request.getUserName(),
+                request.getUserId(),
+                request.getChatId(),
+                request.getMessageId());
+        writer.writeAnswer(response, request.getBot());
     }
 
 }
