@@ -4,6 +4,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.duckteam.javatgbot.logic.BotRequest;
 
 
-public interface InputReader {
-    BotRequest getUserInput(Update update, Bot bot);
+public interface MessageConverter {
+    BotRequest convertMessage(Update update);
 }
