@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Bot" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="ru.duckteam.javatgbot.Main" />
+    <option name="MAIN_CLASS_NAME" value="ru.duckteam.javatgbot.Bot" />
     <module name="java-bot" />
     <extension name="coverage">
       <pattern>

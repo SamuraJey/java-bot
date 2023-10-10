@@ -25,7 +25,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>ru.duckteam.javatgbot.Main</mainClass>
+              <mainClass>ru.duckteam.javatgbot.Bot</mainClass>
             </manifest>
           </archive>
         </configuration>

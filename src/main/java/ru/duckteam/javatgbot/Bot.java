@@ -14,9 +14,14 @@ import ru.duckteam.javatgbot.telegram.TelegramAnswerWriter;
 import ru.duckteam.javatgbot.telegram.TelegramInputReader;
 
 public class Bot extends TelegramLongPollingBot {
-    public static void main1(String[] args) throws TelegramApiException {
-        TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        BotSession botSession = botsApi.registerBot(new Bot());
+    public static void main(String[] args) {
+        Bot bot = new Bot();
+        try {
+            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            BotSession botSession = botsApi.registerBot(bot);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 
     public Bot() {
