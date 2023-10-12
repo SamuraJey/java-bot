@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 
 public class TestURL {
     public static void main(String[] args) {
+        // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи кудаго
         String baseUrl = "https://kudago.com";
         String version = "v1.4";
         String endpoint = String.format("/public-api/%s/events/", version);
