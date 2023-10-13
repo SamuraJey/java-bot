@@ -13,7 +13,8 @@ public class EchoMessageHandler implements MessageHandler {
         BotResponse response = new BotResponse(request.getUserName(),
                 request.getUserId(),
                 request.getChatId(),
-                request.getMessageId());
+                request.getMessageId(),
+                request.getMessage());
         writer.writeAnswer(response);
 
 

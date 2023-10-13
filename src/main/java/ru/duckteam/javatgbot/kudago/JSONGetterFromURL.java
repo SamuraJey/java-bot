@@ -1,0 +1,20 @@
+package ru.duckteam.javatgbot.kudago;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class JSONGetterFromURL {
+    // KUDAGO API https://docs.kudago.com/api/
+    public JSONObject methodName(String apiResponse) {
+
+        JSONObject jsonResponse = null;
+        try {
+            // Преобразуем строку ответа в объект JSON
+            jsonResponse = new JSONObject(apiResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonResponse;
+    }
+}
+

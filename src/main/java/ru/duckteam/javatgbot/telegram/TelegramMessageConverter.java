@@ -13,6 +13,6 @@ public class TelegramMessageConverter implements MessageConverter {
         var chatId = message.getChatId();
         var messageId = message.getMessageId();
 
-        return new BotRequest(userName, userId, chatId, messageId);
+        return new BotRequest(userName, userId, chatId, messageId, message);
     }
 }
