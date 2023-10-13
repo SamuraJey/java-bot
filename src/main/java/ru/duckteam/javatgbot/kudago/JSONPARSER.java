@@ -1,4 +1,4 @@
-package ru.duckteam.javatgbot;
+package ru.duckteam.javatgbot.kudago;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,7 +13,6 @@ public class JSONPARSER {
 
                 // Извлекаем массив результатов событий
                 JSONArray results = jsonResponse.getJSONArray("results");
-
                 // Итерируемся по массиву результатов и выводим названия событий
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject event = results.getJSONObject(i);
