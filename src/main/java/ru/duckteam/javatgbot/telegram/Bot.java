@@ -2,16 +2,18 @@ package ru.duckteam.javatgbot.telegram;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.CopyMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.MessageConverter;
 import ru.duckteam.javatgbot.MessageHandler;
+import ru.duckteam.javatgbot.kudago.KgMessage;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.EchoMessageHandler;
 
-public class Bot extends TelegramLongPollingBot implements AnswerWriter {
+public class  Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final String botName;
     private final MessageConverter reader = new TelegramMessageConverter();
     private final MessageHandler handler = new EchoMessageHandler();
@@ -23,7 +25,8 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
 
     public void onUpdateReceived(Update update) {
         BotRequest request = reader.convertMessage(update);
-        handler.handle(request, this);
+        KgMessage message = new KgMessage();
+        handler.handle(request, this,message);
     }
 
     @Override
@@ -34,19 +37,20 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     @Override
     public void writeAnswer(BotResponse response) {
         //String userName = response.getUserName();
-        long userId = response.getUserId();
-        //long chatId = response.getChatId();
-        int messageId = response.getMessageId();
+        //long userId = response.getUserId();
+        String chatId = response.getChatId().toString();
+        //int messageId = response.getMessageId();
+        String message = response.getMessage();
 
-        CopyMessage cm = CopyMessage.builder()
-                .fromChatId(userId)  //We copy from the user
-                .chatId(userId)      //And send it back to him
-                .messageId(messageId)            //Specifying what message
-                .build();
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+        sendMessage.setChatId(chatId);
+        //sendMessage.setReplyToMessageId(message.getMessageId());
+        sendMessage.setText(message);
         try {
-            execute(cm);
+            execute(new SendMessage(chatId, message));
         } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

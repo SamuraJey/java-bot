@@ -3,9 +3,10 @@ package ru.duckteam.javatgbot.kudago;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class JSONPARSER {
+public class JsonParser {
     // KUDAGO API https://docs.kudago.com/api/
-        public void methodName(String apiResponse)
+    private String string = "";
+        public String methodName(String apiResponse)
         {
             try {
                 // Преобразуем строку ответа в объект JSON
@@ -17,11 +18,12 @@ public class JSONPARSER {
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject event = results.getJSONObject(i);
                     String title = event.getString("title");
-                    System.out.println(title);
+                    string = string + (title + "\n");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return string;
         }
 }
 

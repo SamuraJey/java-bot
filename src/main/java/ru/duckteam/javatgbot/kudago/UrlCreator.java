@@ -4,7 +4,8 @@ package ru.duckteam.javatgbot.kudago;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class CreateURL {
+public class UrlCreator {
+    private static String url;
     public static String getUrl() {
         // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи кудаго
         // KUDAGO API https://docs.kudago.com/api/
@@ -26,7 +27,6 @@ public class CreateURL {
         String lon = "";
         String lat = "";
         String radius = "";
-        String url = "";
 
         try {
             URI uri = new URI(baseUrl + endpoint)

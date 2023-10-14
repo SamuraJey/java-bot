@@ -6,12 +6,14 @@ public final class BotResponse {
     private final Long userId;
     private final Long chatId;
     private final Integer messageId;
+    private final String message;
 
-    public BotResponse(String userName, Long userId, Long chatId, Integer messageId) {
+    public BotResponse(String userName, Long userId, Long chatId, Integer messageId,String message) {
         this.userName = userName;
         this.userId = userId;
         this.chatId = chatId;
         this.messageId = messageId;
+        this.message = message;
     }
 
     public String getUserName() {
@@ -28,6 +30,10 @@ public final class BotResponse {
 
     public Integer getMessageId() {
         return messageId;
+    }
+
+    public String getMessage(){
+        return message;
     }
 
 }
