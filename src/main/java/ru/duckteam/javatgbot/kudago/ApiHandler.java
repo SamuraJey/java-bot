@@ -15,6 +15,7 @@ public class ApiHandler {
         JSONObject JSONResponse = getterFromURL.getJSONObject(urlResponse);
         String[] titles = jsonParser.getValue(JSONResponse, "title");
         String[] descriptions = jsonParser.getValue(JSONResponse, "description");
+        String[] site_url = jsonParser.getValue(JSONResponse, "site_url");
 
 
         for (int i = 0; i < titles.length; i++) {
@@ -27,6 +28,7 @@ public class ApiHandler {
         for (int i = 0; i < titles.length / 2; i++) { // TODO сделать нормальное ограничение на количество символов
             result.append(titles[i]).append("\n");
             result.append(descriptions[i]).append("\n");
+            result.append(site_url[i]).append("\n\n");
         }
 
         String mergedString = result.toString();
