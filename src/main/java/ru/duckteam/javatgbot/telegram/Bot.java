@@ -12,14 +12,19 @@ import ru.duckteam.javatgbot.kudago.ApiHandler;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.EchoMessageHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final String botName;
     private final MessageConverter reader = new TelegramMessageConverter();
     private final MessageHandler handler = new EchoMessageHandler();
+    private final ApiHandler apiHandler = new ApiHandler();
     private boolean isEcho = false;
 
     private boolean isEvents = true;
+
+    private static final Logger LOGS = LoggerFactory.getLogger(Bot.class);
 
     public Bot(String apiKey, String botName) {
         super(apiKey);
@@ -30,7 +35,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         BotRequest request = reader.convertMessage(update);
         if (request.getMessage().isCommand()) {
             commandHandler(request.getMessage().getText());
-            return;                                     //We don't want to echo commands, so we exit
+            return;                                     // We don't want to echo commands, so we exit
         }
         handler.handle(request, this);
     }
@@ -62,45 +67,32 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);      //Any error will be printed here
         }
+
+//        LOGS.info("Получено сообщение ID=%s %s".formatted(response.getMessageId(), response.getUserName()));
     }
 
-    private void scream(BotResponse response) {
-        if (response.getMessage().hasText()) {
-            sendText(response, response.getMessage().getText().toUpperCase());
-        }
-    }
+//    private void scream(BotResponse response) {
+//        if (response.getMessage().hasText()) {
+//            sendText(response, response.getMessage().getText().toUpperCase());
+//        }
+//    }
 
     @Override
     public void writeAnswer(BotResponse response) {
-
         if (isEcho) {
             copyMessage(response);
         } else if (isEvents) {
-            ApiHandler apiHandler = new ApiHandler();
+//            ApiHandler apiHandler = new ApiHandler();
             try {
                 String answer = apiHandler.getResponse();
                 sendText(response, answer);
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGS.error("Ошибка при получении ответа от API");
+                //e.printStackTrace();
             }
         } else {
             sendText(response, "Что-то пошло не так.");
         }
-        // //String userName = response.getUserName();
-        // long userId = response.getUserId();
-        // //long chatId = response.getChatId();
-        // int messageId = response.getMessageId();
-
-        // CopyMessage cm = CopyMessage.builder()
-        //         .fromChatId(userId)  //We copy from the user
-        //         .chatId(userId)      //And send it back to him
-        //         .messageId(messageId)            //Specifying what message
-        //         .build();
-        // try {
-        //     execute(cm);
-        // } catch (TelegramApiException e) {
-        //     throw new RuntimeException(e);
-        // }
     }
 
     private void commandHandler(String command) {

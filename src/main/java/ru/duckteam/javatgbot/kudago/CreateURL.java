@@ -1,6 +1,9 @@
 package ru.duckteam.javatgbot.kudago;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
@@ -8,6 +11,8 @@ import java.time.Instant;
 
 public class CreateURL {
     private static final long UNIX_DAY = 86400;
+    private static final Logger LOGS = LoggerFactory.getLogger(CreateURL.class);
+
 
     public static String getUrl() {
         // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи кудаго
@@ -17,8 +22,8 @@ public class CreateURL {
         String endpoint = String.format("/public-api/%s/events/", version);
         // Пользовательские значения
         long currentTimestamp = Instant.now().getEpochSecond();
-        long prevDayTimestamp = currentTimestamp - UNIX_DAY;
-        long nextWeekTimestamp = currentTimestamp + UNIX_DAY * 6;
+        long prevDayTimestamp = currentTimestamp - 1000L;
+        long nextWeekTimestamp = currentTimestamp + UNIX_DAY * 3;
 
         /*
             id - идентификатор
@@ -71,7 +76,8 @@ public class CreateURL {
             url = uri.toString();
             System.out.println("URL: " + uri);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGS.error("Error while building URL: ", e);
+//            e.printStackTrace();
         }
 
         return url;
