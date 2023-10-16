@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.MessageConverter;
 import ru.duckteam.javatgbot.MessageHandler;
+import ru.duckteam.javatgbot.kudago.ApiHandler;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.EchoMessageHandler;
@@ -27,7 +28,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
 
     public void onUpdateReceived(Update update) {
         BotRequest request = reader.convertMessage(update);
-        if(request.getMessage().isCommand()) {
+        if (request.getMessage().isCommand()) {
             commandHandler(request.getMessage().getText());
             return;                                     //We don't want to echo commands, so we exit
         }
@@ -39,7 +40,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         return botName;
     }
 
-    private void copyMessage (BotResponse response) {
+    private void copyMessage(BotResponse response) {
         CopyMessage cm = CopyMessage.builder()
                 .fromChatId(response.getUserId())  //We copy from the user
                 .chatId(response.getUserId())      //And send it back to him
@@ -52,7 +53,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         }
     }
 
-    public void sendText(BotResponse response, String text){
+    public void sendText(BotResponse response, String text) {
         SendMessage sm = SendMessage.builder()
                 .chatId(response.getChatId().toString()) //Who are we sending a message to
                 .text(text).build();    //Message content
@@ -64,18 +65,24 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     }
 
     private void scream(BotResponse response) {
-        if(response.getMessage().hasText()) {
+        if (response.getMessage().hasText()) {
             sendText(response, response.getMessage().getText().toUpperCase());
         }
-     }
+    }
 
     @Override
     public void writeAnswer(BotResponse response) {
 
         if (isEcho) {
             copyMessage(response);
-        } else if (isEvents){
-            sendText(response, "Тут должен быть список событий с текущего дня на неделюв екб.");
+        } else if (isEvents) {
+            ApiHandler apiHandler = new ApiHandler();
+            try {
+                String answer = apiHandler.getResponse();
+                sendText(response, answer);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             sendText(response, "Что-то пошло не так.");
         }

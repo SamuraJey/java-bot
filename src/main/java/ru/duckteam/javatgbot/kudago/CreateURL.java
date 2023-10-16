@@ -8,6 +8,7 @@ import java.time.Instant;
 
 public class CreateURL {
     private static final long UNIX_DAY = 86400;
+
     public static String getUrl() {
         // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи кудаго
         // KUDAGO API https://docs.kudago.com/api/
@@ -17,7 +18,7 @@ public class CreateURL {
         // Пользовательские значения
         long currentTimestamp = Instant.now().getEpochSecond();
         long prevDayTimestamp = currentTimestamp - UNIX_DAY;
-        long nextWeekTimestamp = currentTimestamp + UNIX_DAY * 1;
+        long nextWeekTimestamp = currentTimestamp + UNIX_DAY * 6;
 
         /*
             id - идентификатор
@@ -44,8 +45,8 @@ public class CreateURL {
          */
         String lang = "ru";
         String page_size = "";
-        String fields = "id,publication_date,dates,title,short_title,slug,place,description,"+
-                "location,categories,price,is_free,"+
+        String fields = "id,publication_date,dates,title,short_title,slug,place,description," +
+                "location,categories,price,is_free," +
                 "site_url";
         String expand = "";
         String orderBy = "date";
@@ -68,7 +69,7 @@ public class CreateURL {
                             isFree, categories, lon, lat, radius)).normalize();
 
             url = uri.toString();
-            System.out.println("URL: " + uri.toString());
+            System.out.println("URL: " + uri);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -80,25 +81,24 @@ public class CreateURL {
                                            String textFormat, String ids, String location, String actualSince,
                                            String actualUntil, String isFree, String categories, String lon, String lat,
                                            String radius) {
-        StringBuilder queryParams = new StringBuilder();
 
         // Добавьте параметры запроса в соответствии со спецификацией
-        queryParams.append("?lang=").append(lang)
-                .append("&page_size=").append(page_size)
-                .append("&fields=").append(fields)
-                .append("&expand=").append(expand)
-                .append("&order_by=").append(orderBy)
-                .append("&text_format=").append(textFormat)
-                .append("&ids=").append(ids)
-                .append("&location=").append(location)
-                .append("&actual_since=").append(actualSince)
-                .append("&actual_until=").append(actualUntil)
-                .append("&is_free=").append(isFree)
-                .append("&categories=").append(categories)
-                .append("&lon=").append(lon)
-                .append("&lat=").append(lat)
-                .append("&radius=").append(radius);
+        String queryParams = "?lang=" + lang +
+                "&page_size=" + page_size +
+                "&fields=" + fields +
+                "&expand=" + expand +
+                "&order_by=" + orderBy +
+                "&text_format=" + textFormat +
+                "&ids=" + ids +
+                "&location=" + location +
+                "&actual_since=" + actualSince +
+                "&actual_until=" + actualUntil +
+                "&is_free=" + isFree +
+                "&categories=" + categories +
+                "&lon=" + lon +
+                "&lat=" + lat +
+                "&radius=" + radius;
 
-        return queryParams.toString();
+        return queryParams;
     }
 }

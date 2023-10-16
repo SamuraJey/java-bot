@@ -13,7 +13,6 @@ public class JSONParser {
             String keyValue = event.getString(key);
             retArr[i] = keyValue;
         }
-
         return retArr;
     }
 }
