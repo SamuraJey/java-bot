@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-public class UnpakerURL {
+public class UrlUnpacker {
 
     private final String urlString;
-    public UnpakerURL(String urlString)
+    public UrlUnpacker(String urlString)
     {
         this.urlString = urlString;
     }

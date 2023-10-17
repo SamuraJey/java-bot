@@ -18,7 +18,7 @@ public class JsonParser {
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject event = results.getJSONObject(i);
                     String title = event.getString("title");
-                    string = string + (title + "\n");
+                    string = string + (i + 1) +'.'+" "+ title + "\n";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
