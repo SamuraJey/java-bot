@@ -1,4 +1,4 @@
-package ru.duckteam.javatgbot.kudago;
+package ru.duckteam.javatgbot.logic.kudago;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

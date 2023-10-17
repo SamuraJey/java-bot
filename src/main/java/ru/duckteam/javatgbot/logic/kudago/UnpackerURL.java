@@ -1,4 +1,4 @@
-package ru.duckteam.javatgbot.kudago;
+package ru.duckteam.javatgbot.logic.kudago;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

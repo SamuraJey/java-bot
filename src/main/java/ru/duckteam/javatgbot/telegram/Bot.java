@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.MessageConverter;
 import ru.duckteam.javatgbot.MessageHandler;
-import ru.duckteam.javatgbot.kudago.ApiHandler;
+import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.EchoMessageHandler;
@@ -31,6 +31,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         this.botName = botName;
     }
 
+    @Override
     public void onUpdateReceived(Update update) {
         BotRequest request = reader.convertMessage(update);
         if (request.getMessage().isCommand()) {
