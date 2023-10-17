@@ -11,8 +11,8 @@ import java.time.Instant;
 
 public class CreateURL {
     private static final long UNIX_DAY = 86400;
-    private static final Logger LOGS = LoggerFactory.getLogger(CreateURL.class);
 
+    private static final Logger LOGS = LoggerFactory.getLogger(CreateURL.class);
 
     public static String getUrl() {
         // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи кудаго
@@ -66,12 +66,11 @@ public class CreateURL {
         String lat = "";
         String radius = "";
         String url = "";
+        Builder builder = new Builder(lang,fields,orderBy,textFormat,location,actualSince,actualUntil);
 
         try {
             URI uri = new URI(baseUrl + endpoint)
-                    .resolve(buildQueryParams(lang, page_size, fields, expand, orderBy, textFormat,
-                            ids, location, actualSince, actualUntil,
-                            isFree, categories, lon, lat, radius)).normalize();
+                    .resolve(builder.buildQueryParams()).normalize();
 
             url = uri.toString();
             System.out.println("URL: " + uri);
@@ -81,30 +80,5 @@ public class CreateURL {
         }
 
         return url;
-    }
-
-    private static String buildQueryParams(String lang, String page_size, String fields, String expand, String orderBy,
-                                           String textFormat, String ids, String location, String actualSince,
-                                           String actualUntil, String isFree, String categories, String lon, String lat,
-                                           String radius) {
-
-        // Добавьте параметры запроса в соответствии со спецификацией
-        String queryParams = "?lang=" + lang +
-                "&page_size=" + page_size +
-                "&fields=" + fields +
-                "&expand=" + expand +
-                "&order_by=" + orderBy +
-                "&text_format=" + textFormat +
-                "&ids=" + ids +
-                "&location=" + location +
-                "&actual_since=" + actualSince +
-                "&actual_until=" + actualUntil +
-                "&is_free=" + isFree +
-                "&categories=" + categories +
-                "&lon=" + lon +
-                "&lat=" + lat +
-                "&radius=" + radius;
-
-        return queryParams;
     }
 }
