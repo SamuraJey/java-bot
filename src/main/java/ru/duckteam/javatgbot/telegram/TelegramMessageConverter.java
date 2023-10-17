@@ -17,9 +17,9 @@ public class TelegramMessageConverter implements MessageConverter {
         var messageId = message.getMessageId();
 
         if (message.isCommand()) {
-            commandHandler.handle(message.getText());
+            commandHandler.handleCommand(message.getText());
             // We don't want to echo commands, so we exit
         }
-        return new BotRequest(userName, userId, chatId, messageId, message,commandHandler.getIsEcho(),commandHandler.getIsEvents());
+        return new BotRequest(userName, userId, chatId, messageId, message, commandHandler.getCurrentMode());
     }
 }

@@ -1,9 +1,10 @@
 package ru.duckteam.javatgbot;
 
 import ru.duckteam.javatgbot.logic.BotRequest;
-import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
 
 public interface Handler {
-    void handle(BotRequest request, AnswerWriter writer, ApiHandler apiHandler, boolean isEcho, boolean isEvents);
+    // Саша, если ты хочешь поменять интерфейс, то не меняй этот интерфейс, а наследуй от него и делай новый.
+    // Нам же не зря про это на лекции рассказали.
+    void handle(BotRequest request, AnswerWriter writer);
 }

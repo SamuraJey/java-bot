@@ -10,18 +10,17 @@ public final class BotResponse {
     private final Integer messageId;
     private final Message message;
     private final String responeString;
-    private final boolean isEcho;
-    private final boolean isEvents;
+    private final Integer commandId;
 
-    public BotResponse(String userName, Long userId, Long chatId, Integer messageId, Message message, boolean isEvents, boolean isEcho, String responeString) {
+    public BotResponse(String userName, Long userId, Long chatId, Integer messageId, Message message,
+                       Integer commandId, String responeString) {
         this.userName = userName;
         this.userId = userId;
         this.chatId = chatId;
         this.messageId = messageId;
         this.message = message;
+        this.commandId = commandId;
         this.responeString = responeString;
-        this.isEcho = isEcho;
-        this.isEvents = isEvents;
     }
 
     public String getUserName() {
@@ -46,8 +45,9 @@ public final class BotResponse {
 
     public String getResponeString() {return responeString;}
 
-    public boolean getIsEcho() {return isEcho;}
+    public Integer getCommandId() {
+        return commandId;
+    }
 
-    public boolean getIsEvents() {return isEvents;}
 }
 

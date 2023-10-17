@@ -1,5 +1,7 @@
 package ru.duckteam.javatgbot.telegram;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.CopyMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -7,21 +9,16 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.MessageConverter;
-import ru.duckteam.javatgbot.Handler;
-import ru.duckteam.javatgbot.logic.MessageHandler;
-import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.MessageHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
 public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final String botName;
     private final MessageConverter reader = new TelegramMessageConverter();
     private final MessageHandler handler = new MessageHandler();
     private final ApiHandler apiHandler = new ApiHandler();
-    private static final Logger LOGS = LoggerFactory.getLogger(Bot.class);
 
     public Bot(String apiKey, String botName) {
         super(apiKey);
@@ -31,7 +28,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     @Override
     public void onUpdateReceived(Update update) {
         BotRequest request = reader.convertMessage(update);
-        handler.handle(request, this,apiHandler);//,isEcho,isEvents);
+        handler.handle(request, this);//,isEcho,isEvents);
     }
 
     @Override
@@ -72,21 +69,10 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
 
     @Override
     public void writeAnswer(BotResponse response) {
-        if (response.getIsEcho()) {
-            copyMessage(response);
-        } else if (response.getIsEvents()) {
-//            ApiHandler apiHandler = new ApiHandler();
-            try {
-                sendText(response);
-            } catch (Exception e) {
-                LOGS.error("Ошибка при получении ответа от API");
-                //e.printStackTrace();
-            }
-        } else {
-            sendText(response, "Что-то пошло не так.");
-        }
+        sendText(response);
     }
 
+    // Зачем нам этот метод?
     private void sendText(BotResponse response, String s) {
         SendMessage sm = SendMessage.builder()
                 .chatId(response.getChatId().toString()) //Who are we sending a message to

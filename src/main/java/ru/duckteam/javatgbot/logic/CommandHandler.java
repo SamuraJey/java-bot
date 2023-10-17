@@ -1,25 +1,35 @@
 package ru.duckteam.javatgbot.logic;
 
+import java.util.Map;
+
 public class CommandHandler {
-    private boolean isEcho = false;
-    private boolean isEvents = true;
-    public void handle(String command) {
+
+    private Integer currentMode = 1;
+
+    private final Map<String, Integer> dictionary;
+
+    public CommandHandler() {
+        dictionary = Map.of(
+                "/echo", 1,
+                "/events", 2
+        );
+    }
+    public void handleCommand(String command) {
+
         switch (command) {
             case "/echo":
-                isEvents = false;
-                isEcho = !isEcho;
+                currentMode = dictionary.get(command);
                 break;
             case "/events":
-                isEcho = false;
-                isEvents = !isEvents;
+                currentMode = dictionary.get(command);
                 break;
             default:
                 break;
         }
     }
 
-    public boolean getIsEcho() {return isEcho;}
-
-    public boolean getIsEvents() {return isEvents;}
+    public Integer getCurrentMode() {
+        return currentMode;
+    }
 
 }
