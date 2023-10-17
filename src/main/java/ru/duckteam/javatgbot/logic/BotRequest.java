@@ -9,13 +9,18 @@ public final class BotRequest {
     private final Long chatId;
     private final Integer messageId;
     private final Message message;
+    private final boolean isEcho;
+    private final boolean isEvents;
 
-    public BotRequest(User userName, Long userId, Long chatId, Integer messageId, Message message) {
+
+    public BotRequest(User userName, Long userId, Long chatId, Integer messageId, Message message,boolean isEcho,boolean isEvents) {
         this.userName = userName;
         this.userId = userId;
         this.chatId = chatId;
         this.messageId = messageId;
         this.message = message;
+        this.isEcho = isEcho;
+        this.isEvents = isEvents;
     }
 
     public String getUserName() {
@@ -38,4 +43,7 @@ public final class BotRequest {
         return message;
     }
 
+    public boolean getIsEcho() {return isEcho;}
+
+    public boolean getIsEvents() {return isEvents;}
 }

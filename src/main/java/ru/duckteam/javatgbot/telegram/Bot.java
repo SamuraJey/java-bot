@@ -12,19 +12,15 @@ import ru.duckteam.javatgbot.logic.MessageHandler;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
-import ru.duckteam.javatgbot.logic.EchoMessageHandler;
+import ru.duckteam.javatgbot.logic.MessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final String botName;
     private final MessageConverter reader = new TelegramMessageConverter();
-    private final Handler handler = new MessageHandler();
+    private final MessageHandler handler = new MessageHandler();
     private final ApiHandler apiHandler = new ApiHandler();
-    private boolean isEcho = false;
-
-    private boolean isEvents = true;
-
     private static final Logger LOGS = LoggerFactory.getLogger(Bot.class);
 
     public Bot(String apiKey, String botName) {
@@ -35,11 +31,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     @Override
     public void onUpdateReceived(Update update) {
         BotRequest request = reader.convertMessage(update);
-        if (request.getMessage().isCommand()) {
-            commandHandler(request.getMessage().getText());
-            return;                                     // We don't want to echo commands, so we exit
-        }
-        handler.handle(request, this);
+        handler.handle(request, this,apiHandler);//,isEcho,isEvents);
     }
 
     @Override
@@ -60,16 +52,15 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         }
     }
 
-    public void sendText(BotResponse response, String text) {
+    public void sendText(BotResponse response) {
         SendMessage sm = SendMessage.builder()
                 .chatId(response.getChatId().toString()) //Who are we sending a message to
-                .text(text).build();    //Message content
+                .text(response.getResponeString()).build();    //Message content
         try {
             execute(sm);                        //Actually sending the message
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);      //Any error will be printed here
         }
-
 //        LOGS.info("Получено сообщение ID=%s %s".formatted(response.getMessageId(), response.getUserName()));
     }
 
@@ -81,13 +72,12 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
 
     @Override
     public void writeAnswer(BotResponse response) {
-        if (isEcho) {
+        if (response.getIsEcho()) {
             copyMessage(response);
-        } else if (isEvents) {
+        } else if (response.getIsEvents()) {
 //            ApiHandler apiHandler = new ApiHandler();
             try {
-                String answer = apiHandler.getResponse();
-                sendText(response, answer);
+                sendText(response);
             } catch (Exception e) {
                 LOGS.error("Ошибка при получении ответа от API");
                 //e.printStackTrace();
@@ -97,18 +87,14 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         }
     }
 
-    private void commandHandler(String command) {
-        switch (command) {
-            case "/echo":
-                isEvents = false;
-                isEcho = !isEcho;
-                break;
-            case "/events":
-                isEcho = false;
-                isEvents = !isEvents;
-                break;
-            default:
-                break;
+    private void sendText(BotResponse response, String s) {
+        SendMessage sm = SendMessage.builder()
+                .chatId(response.getChatId().toString()) //Who are we sending a message to
+                .text(s).build();    //Message content
+        try {
+            execute(sm);                        //Actually sending the message
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);      //Any error will be printed here
         }
     }
 }
