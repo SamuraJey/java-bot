@@ -18,7 +18,8 @@ public class MessageHandler implements Handler {
     public MessageHandler() {
         dictionary = Map.of(
                 "/echo", 1,
-                "/events", 2
+                "/events", 2,
+                "/A", 3
         );
     }
 
@@ -27,6 +28,7 @@ public class MessageHandler implements Handler {
         /*
         Done_TODO Сейчас бот при выборе режима /events сразу после команды отправляет все ивенты.
         Done_TODO Или, что бы он отправлял ивенты сразу после команды, но переходил после этого в режим /echo
+        TODO Сейчас если один пользователь переключает режим, то он меняется у всех пользователей, надо как-то исправлять.
         */
         BotResponse response = null;
         if (request.getMessage().isCommand()) {
@@ -79,6 +81,20 @@ public class MessageHandler implements Handler {
                 } catch (Exception e) {
                     LOGS.error("Ошибка при получении ответа от API", e);
                 }
+                return;
+            case 3:
+                response = new BotResponse(request.getUserName(),
+                        request.getUserId(),
+                        request.getChatId(),
+                        request.getMessageId(),
+                        request.getMessage(),
+                        currentMode,
+                        "TEST");
+                writer.writeAnswer(response);
+                setCurrentMode(3);
+                LOGS.info("Получено сообщение messageID=%s Username=%s Text=%s".formatted(request.getMessageId(),
+                        request.getUserName(), request.getMessage().getText()));
+                LOGS.info("Current mode is %s".formatted(currentMode));
                 return;
             default:
                 LOGS.error("Ошибка при получении команды");
