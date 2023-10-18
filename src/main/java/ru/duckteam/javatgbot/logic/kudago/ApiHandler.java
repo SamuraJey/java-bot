@@ -30,9 +30,7 @@ public class ApiHandler {
             result.append(descriptions[i]).append("\n");
             result.append(site_url[i]).append("\n\n");
         }
-
-        String mergedString = result.toString();
-        System.out.println(mergedString);
-        return mergedString;
+        //        System.out.println(mergedString);
+        return result.toString();
     }
 }
