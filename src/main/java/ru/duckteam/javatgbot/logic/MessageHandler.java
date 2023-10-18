@@ -6,60 +6,89 @@ import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.Handler;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
-public class MessageHandler implements Handler{
-    private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
-    private final CommandHandler commandHandler = new CommandHandler();
+import java.util.Map;
 
+
+public class MessageHandler implements Handler {
+    private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
+    private final Map<String, Integer> dictionary;
     private final ApiHandler apiHandler = new ApiHandler();
+    private Integer currentMode = 1;
+
+    public MessageHandler() {
+        dictionary = Map.of(
+                "/echo", 1,
+                "/events", 2
+        );
+    }
 
     @Override
-    public void handle(BotRequest request, AnswerWriter writer)//,boolean isEvents,boolean isEcho)
-    {
+    public void handle(BotRequest request, AnswerWriter writer) {
         /*
-        TODO Сейчас бот при выборе режима /events сразу после команды отправляет все ивенты.
-        TODO Нужно сделать так, чтобы бот отправлял ивенты только после получения сообщения (не команды) от пользователя.
-        TODO Или, что бы он отправлял ивенты сразу после команды, но переходил после этого в режим /echo
+        Done_TODO Сейчас бот при выборе режима /events сразу после команды отправляет все ивенты.
+        Done_TODO Или, что бы он отправлял ивенты сразу после команды, но переходил после этого в режим /echo
         */
         BotResponse response = null;
-        if(request.getMessage().isCommand()) {
-            commandHandler.handleCommand(request.getMessage().getText());
-        }
-        else if (request.getMessage().isCommand() && commandHandler.getCurrentMode() == null) {
-            LOGS.error("Ошибка при получении команды");
-        }
-
-        if(commandHandler.getCurrentMode() == 1)
-        {
-            response = new BotResponse(request.getUserName(),
-                    request.getUserId(),
-                    request.getChatId(),
-                    request.getMessageId(),
-                    request.getMessage(),
-                    request.getCommandId(),
-                    request.getMessage().getText());
-            writer.writeAnswer(response);
-            LOGS.info("Получена команда ID=%s %s".formatted(request.getMessageId(), request.getUserName()));
+        if (request.getMessage().isCommand()) {
+            currentMode = dictionary.get(request.getMessage().getText());
+        } else if (request.getMessage().isCommand() && currentMode == null) {
+            LOGS.error("Ошибка при получении команды1");
             return;
         }
-        else if(commandHandler.getCurrentMode() == 2)
-        {
-            try {
+
+        switch (currentMode) {
+            case 1: // /echo command.
+                if (request.getMessage().getText().equals("/echo")) {
+                    response = new BotResponse(request.getUserName(),
+                            request.getUserId(),
+                            request.getChatId(),
+                            request.getMessageId(),
+                            request.getMessage(),
+                            currentMode,
+                            "Включен режим echo.");
+                    writer.writeAnswer(response);
+                    LOGS.info("Получена команда messageID=%s Username=%s Text=%s".formatted(request.getMessageId(),
+                            request.getUserName(), request.getMessage().getText()));
+                    return;
+                }
                 response = new BotResponse(request.getUserName(),
                         request.getUserId(),
                         request.getChatId(),
                         request.getMessageId(),
                         request.getMessage(),
-                        request.getCommandId(),
-                        apiHandler.getResponse());
+                        currentMode,
+                        request.getMessage().getText());
                 writer.writeAnswer(response);
+                LOGS.info("Получено сообщение messageID=%s Username=%s Text=%s".formatted(request.getMessageId(),
+                        request.getUserName(), request.getMessage().getText()));
+                return;
+            case 2: // /events command.
 
-            } catch (Exception e) {
-                LOGS.error("Ошибка при получении ответа от API");
-            }
-            return;
+                try {
+                    response = new BotResponse(request.getUserName(),
+                            request.getUserId(),
+                            request.getChatId(),
+                            request.getMessageId(),
+                            request.getMessage(),
+                            currentMode,
+                            apiHandler.getResponse());
+                    writer.writeAnswer(response);
+                    setCurrentMode(1);
+                    LOGS.info("Получено сообщение messageID=%s Username=%s Text=%s".formatted(request.getMessageId(),
+                            request.getUserName(), request.getMessage().getText()));
+                } catch (Exception e) {
+                    LOGS.error("Ошибка при получении ответа от API", e);
+                }
+                return;
+            default:
+                LOGS.error("Ошибка при получении команды");
         }
 
-        LOGS.info("%s".formatted(commandHandler.getCurrentMode()));
-        LOGS.info("Получено сообщение ID=%s %s".formatted(request.getMessageId(), request.getUserName()));
+//        LOGS.info("Получено сообщение ID=%s %s %s".formatted(request.getMessageId(), request.getUserName(), request.getMessage().getText()));
     }
+
+    public void setCurrentMode(Integer mode) {
+        currentMode = mode;
+    }
+
 }

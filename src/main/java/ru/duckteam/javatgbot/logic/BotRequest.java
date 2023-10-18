@@ -9,17 +9,15 @@ public final class BotRequest {
     private final Long chatId;
     private final Integer messageId;
     private final Message message;
-    private final Integer commandId;
 
 
-
-    public BotRequest(User userName, Long userId, Long chatId, Integer messageId, Message message, Integer commandId) {
+    public BotRequest(User userName, Long userId, Long chatId, Integer messageId, Message message) {
         this.userName = userName;
         this.userId = userId;
         this.chatId = chatId;
         this.messageId = messageId;
         this.message = message;
-        this.commandId = commandId;
+
     }
 
     public String getUserName() {
@@ -42,8 +40,5 @@ public final class BotRequest {
         return message;
     }
 
-    public Integer getCommandId() {
-        return commandId;
-    }
 
 }

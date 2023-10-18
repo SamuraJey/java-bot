@@ -2,6 +2,7 @@ package ru.duckteam.javatgbot.logic;
 
 import java.util.Map;
 
+@Deprecated
 public class CommandHandler {
 
     private Integer currentMode = 1;
