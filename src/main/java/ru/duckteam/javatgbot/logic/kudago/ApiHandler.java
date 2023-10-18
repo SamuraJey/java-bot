@@ -6,8 +6,7 @@ public class ApiHandler {
     final JSONGetterFromURL getterFromURL = new JSONGetterFromURL();
     final JSONParser jsonParser = new JSONParser();
 
-    public String getResponse() throws Exception { //  Если запустить программу отсюда, то она выдаст нам URL все называния событий
-
+    public String getResponse() throws Exception {
 
         //CreateURL url = new CreateURL();
         UnpackerURL unpacker = new UnpackerURL(CreateURL.getUrl());
@@ -30,7 +29,6 @@ public class ApiHandler {
             result.append(descriptions[i]).append("\n");
             result.append(site_url[i]).append("\n\n");
         }
-        //        System.out.println(mergedString);
         return result.toString();
     }
 }

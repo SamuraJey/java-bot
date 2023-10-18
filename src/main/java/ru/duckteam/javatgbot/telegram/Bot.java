@@ -26,8 +26,9 @@ public class Bot extends TelegramLongPollingCommandBot implements AnswerWriter {
     private final MessageHandler handler = new MessageHandler();
     private final ApiHandler apiHandler = new ApiHandler();
 
-    public Bot(String apiKey, String botName, BaseCommand startCommand) {
+    public Bot(String apiKey, String botName) {
         super(apiKey);
+        StartCommand startCommand = new StartCommand();
         registerAll(startCommand);
         this.botName = botName;
     }
