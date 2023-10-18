@@ -23,7 +23,8 @@ public class CreateURL {
         // Пользовательские значения
         long currentTimestamp = Instant.now().getEpochSecond();
         long prevDayTimestamp = currentTimestamp - 1000L;
-        long nextWeekTimestamp = currentTimestamp + UNIX_DAY * 3;
+        long nextDayTimestamp = currentTimestamp + UNIX_DAY;
+        long nextWeekTimestamp = currentTimestamp + UNIX_DAY;
 
         /*
             id - идентификатор
@@ -59,21 +60,21 @@ public class CreateURL {
         String ids = "";
         String location = "ekb";
         String actualSince = String.valueOf(prevDayTimestamp);
-        String actualUntil = String.valueOf(nextWeekTimestamp);
+        String actualUntil = String.valueOf(nextDayTimestamp);
         String isFree = "";
         String categories = "";
         String lon = "";
         String lat = "";
         String radius = "";
         String url = "";
-        Builder builder = new Builder(lang,fields,orderBy,textFormat,location,actualSince,actualUntil);
+        Builder builder = new Builder(lang, fields, orderBy, textFormat, location, actualSince, actualUntil);
 
         try {
             URI uri = new URI(baseUrl + endpoint)
                     .resolve(builder.buildQueryParams()).normalize();
 
             url = uri.toString();
-            System.out.println("URL: " + uri);
+//            System.out.println("URL: " + uri);
         } catch (URISyntaxException e) {
             LOGS.error("Error while building URL: ", e);
 //            e.printStackTrace();
