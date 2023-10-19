@@ -50,28 +50,28 @@ public class CreateURL {
         participants - агенты события
          */
         String lang = "ru";
-        String page_size = "";
+        //String page_size = "";
         String fields = "id,publication_date,dates,title,short_title,slug,place,description," +
                 "location,categories,price,is_free," +
                 "site_url";
-        String expand = "";
+        //String expand = "";
         String orderBy = "date";
         String textFormat = "plain";
-        String ids = "";
+        //String ids = "";
         String location = "ekb";
         String actualSince = String.valueOf(prevDayTimestamp);
         String actualUntil = String.valueOf(nextDayTimestamp);
-        String isFree = "";
-        String categories = "";
-        String lon = "";
-        String lat = "";
-        String radius = "";
+        //String isFree = "";
+        //String categories = "";
+        //String lon = "";
+        //String lat = "";
+        //String radius = "";
         String url = "";
-        Builder builder = new Builder(lang, fields, orderBy, textFormat, location, actualSince, actualUntil);
+        QueryParamsBuilder builder = new QueryParamsBuilder(lang, fields, orderBy, textFormat, location, actualSince, actualUntil);
 
         try {
             URI uri = new URI(baseUrl + endpoint)
-                    .resolve(builder.buildQueryParams()).normalize();
+                    .resolve(builder.build()).normalize();
 
             url = uri.toString();
 //            System.out.println("URL: " + uri);
