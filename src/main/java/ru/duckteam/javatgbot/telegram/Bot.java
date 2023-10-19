@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.MessageConverter;
 import ru.duckteam.javatgbot.command.BaseCommand;
+import ru.duckteam.javatgbot.command.EventsCommand;
 import ru.duckteam.javatgbot.command.StartCommand;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
@@ -29,7 +30,8 @@ public class Bot extends TelegramLongPollingCommandBot implements AnswerWriter {
     public Bot(String apiKey, String botName) {
         super(apiKey);
         StartCommand startCommand = new StartCommand();
-        registerAll(startCommand);
+        EventsCommand eventsCommand = new EventsCommand();
+        registerAll(startCommand, eventsCommand);
         this.botName = botName;
     }
 
