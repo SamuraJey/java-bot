@@ -67,7 +67,14 @@ public class CreateURL {
         //String lat = "";
         //String radius = "";
         String url = "";
-        QueryParamsBuilder builder = new QueryParamsBuilder();
+        QueryParamsBuilder builder = new QueryParamsBuilder()
+                .lang(lang)
+                .fields(fields)
+                .orderBy(orderBy)
+                .location(location)
+                .actualSince(Integer.parseInt(actualSince))
+                .actualUntil(Integer.parseInt(actualUntil))
+                ;
 
         try {
             URI uri = new URI(baseUrl + endpoint)

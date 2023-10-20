@@ -1,21 +1,21 @@
 package ru.duckteam.javatgbot.logic.kudago;
 
 public class QueryParamsBuilder {
-    private String lang;
-    private int pageSize;
-    private String fields;
-    private String expand;
-    private String orderBy;
-    private String textFormat;
-    private String ids;
-    private String location;
-    private int actualSince;
-    private int actualUntil;
-    private String isFree;
-    private String categories;
-    private double lon;
-    private double lat;
-    private int radius;
+    private String lang = "";
+    private int pageSize = 0;
+    private String fields = "";
+    private String expand = "";
+    private String orderBy = "";
+    private String textFormat = "";
+    private String ids = "";
+    private String location = "";
+    private int actualSince = 0;
+    private int actualUntil = 0;
+    private String isFree = "";
+    private String categories = "";
+    private double lon = 0;
+    private double lat = 0;
+    private int radius = 0;
 
 
     public String build() {

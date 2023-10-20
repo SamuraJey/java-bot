@@ -10,16 +10,15 @@ public final class BotResponse {
     private final Integer messageId;
     private final Message message;
     private final String responeString;
-    private final Integer commandId;
+    //private final Integer commandId;
 
-    public BotResponse(String userName, Long userId, Long chatId, Integer messageId, Message message,
-                       Integer commandId, String responeString) {
+    public BotResponse(String userName, Long userId, Long chatId, Integer messageId, Message message,String responeString) {
         this.userName = userName;
         this.userId = userId;
         this.chatId = chatId;
         this.messageId = messageId;
         this.message = message;
-        this.commandId = commandId;
+        //this.commandId = commandId;
         this.responeString = responeString;
     }
 
@@ -45,9 +44,9 @@ public final class BotResponse {
 
     public String getResponeString() {return responeString;}
 
-    public Integer getCommandId() {
-        return commandId;
-    }
+    //public Integer getCommandId() {
+        //return commandId;
+    //}
 
 }
 

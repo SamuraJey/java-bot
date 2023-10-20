@@ -8,30 +8,59 @@ import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
 import java.util.Map;
 
+import static org.apache.commons.io.IOUtils.writer;
+
 
 public class MessageHandler implements Handler {
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
-    private final Map<String, Integer> dictionary;
-    private final ApiHandler apiHandler = new ApiHandler();
-    private Integer currentMode = 1;
+    private final Map<String, String> dictionary;
+    //private Integer currentMode = 1;
 
-    public MessageHandler() {
+    public MessageHandler() throws Exception {
+
+        ApiHandler apiHandler = new ApiHandler();
         dictionary = Map.of(
-                "/echo", 1,
-                "/events", 2,
-                "/A", 3
+                "/echo","Включен режим echo." ,
+                "/events", apiHandler.getResponse(),
+                "/A" ,"TEST"
         );
     }
 
     @Override
-    public void handle(BotRequest request, AnswerWriter writer) {
+    public void handle(BotRequest request,AnswerWriter writer) {
         /*
         Done_TODO Сейчас бот при выборе режима /events сразу после команды отправляет все ивенты.
         Done_TODO Или, что бы он отправлял ивенты сразу после команды, но переходил после этого в режим /echo
         TODO Сейчас если один пользователь переключает режим, то он меняется у всех пользователей, надо как-то исправлять.
         */
+
+        var key = request.getMessage().getText();
+        var chatId = request.getMessage().getChatId().toString();
         BotResponse response = null;
-        if (request.getMessage().isCommand()) {
+
+        if (dictionary.containsKey(key)) {
+            response = new BotResponse(request.getUserName(),
+                    request.getUserId(),
+                    request.getChatId(),
+                    request.getMessageId(),
+                    request.getMessage(),
+                    dictionary.get(key));
+            writer.writeAnswer(response);
+        } else {
+            response = new BotResponse(request.getUserName(),
+                    request.getUserId(),
+                    request.getChatId(),
+                    request.getMessageId(),
+                    request.getMessage(),
+                    request.getMessage().getText());
+            writer.writeAnswer(response);
+            }
+
+        LOGS.info("Получено сообщение ID=%s %s %s".formatted(request.getMessageId(), request.getUserName(), request.getMessage().getText()));
+
+
+        /*if (request.getMessage().isCommand()) {
+
             currentMode = dictionary.get(request.getMessage().getText());
         } else if (request.getMessage().isCommand() && currentMode == null) {
             LOGS.error("Ошибка при получении команды1");
@@ -97,14 +126,14 @@ public class MessageHandler implements Handler {
                 LOGS.info("Current mode is %s".formatted(currentMode));
                 return;
             default:
-                LOGS.error("Ошибка при получении команды");
+                LOGS.error("Ошибка при получении команды")*/
         }
 
 //        LOGS.info("Получено сообщение ID=%s %s %s".formatted(request.getMessageId(), request.getUserName(), request.getMessage().getText()));
     }
 
-    public void setCurrentMode(Integer mode) {
-        currentMode = mode;
-    }
+    //public void setCurrentMode(Integer mode) {
+   //     currentMode = mode;
+    //}
 
-}
+//}

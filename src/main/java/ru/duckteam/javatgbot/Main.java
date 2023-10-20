@@ -6,7 +6,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.duckteam.javatgbot.telegram.Bot;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Bot bot = new Bot(Secret.getApiKey(), Secret.getBotName());
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
