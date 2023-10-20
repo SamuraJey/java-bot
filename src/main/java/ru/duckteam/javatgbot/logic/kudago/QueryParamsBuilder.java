@@ -78,6 +78,11 @@ public class QueryParamsBuilder {
         return this;
     }
 
+    public QueryParamsBuilder location(String location) {
+        this.location = location;
+        return this;
+    }
+
     public QueryParamsBuilder actualSince(int actualSince) {
         this.actualSince = actualSince;
         return this;
