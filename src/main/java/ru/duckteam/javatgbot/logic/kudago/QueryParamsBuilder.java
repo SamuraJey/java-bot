@@ -1,41 +1,28 @@
 package ru.duckteam.javatgbot.logic.kudago;
 
 public class QueryParamsBuilder {
-    private final String lang;
-    private String page_size = "";
-    private final String fields;
-    private String expand = "";
-    private final String orderBy;
-    private final String textFormat;
-    private String ids = "";
-    private final String location;
-    private final String actualSince;
-    private final String actualUntil;
-    private String isFree = "";
-    private String categories = "";
-    private String lon = "";
-    private String lat = "";
-    private String radius = "";
-
-
-    public QueryParamsBuilder(String lang, String fields, String orderBy, String textFormat, String location, String actualSince, String actualUntil)
-    {
-        this.lang = lang;
-        this.fields = fields;
-        this.orderBy = orderBy;
-        this.textFormat = textFormat;
-        this.location = location;
-        this.actualSince = actualSince;
-        this.actualUntil = actualUntil;
-    }
-
+    private String lang;
+    private int pageSize;
+    private String fields;
+    private String expand;
+    private String orderBy;
+    private String textFormat;
+    private String ids;
+    private String location;
+    private int actualSince;
+    private int actualUntil;
+    private String isFree;
+    private String categories;
+    private double lon;
+    private double lat;
+    private int radius;
 
 
     public String build() {
 
         // Добавьте параметры запроса в соответствии со спецификацией
         String queryParams = "?lang=" + lang +
-                "&page_size=" + page_size +
+                "&page_size=" + pageSize +
                 "&fields=" + fields +
                 "&expand=" + expand +
                 "&order_by=" + orderBy +
@@ -53,18 +40,36 @@ public class QueryParamsBuilder {
         return queryParams;
     }
 
-    public QueryParamsBuilder isFree(boolean isFree){
-        this.isFree = Boolean.toString(isFree);
+    public QueryParamsBuilder lang(String lang) {
+        this.lang = lang;
         return this;
     }
 
-    public QueryParamsBuilder page_size(String page_size){ //page size is int?
-        this.page_size = page_size;
+    public QueryParamsBuilder pageSize(int pageSize) { //page size is int?
+        this.pageSize = pageSize;
+        return this;
+    }
+
+    public QueryParamsBuilder fields(String fields) {
+        this.fields = fields;
+        return this;
+    }
+
+    public QueryParamsBuilder orderBy(String orderBy) {
+        this.orderBy = orderBy;
         return this;
     }
 
     public QueryParamsBuilder expand(String expand){
+        // string (необязательный)
+        // Включить в выдачу более подробную информацию для указанных полей, можно несколько через запяту
+        // Варианты: images place location dates participants
         this.expand = expand;
+        return this;
+    }
+
+    public QueryParamsBuilder textFormat(String textFormat) {
+        this.textFormat = textFormat;
         return this;
     }
 
@@ -73,22 +78,38 @@ public class QueryParamsBuilder {
         return this;
     }
 
+    public QueryParamsBuilder actualSince(int actualSince) {
+        this.actualSince = actualSince;
+        return this;
+    }
+
+    public QueryParamsBuilder actualUntil(int actualUntil) {
+        this.actualUntil = actualUntil;
+        return this;
+    }
+
+    public QueryParamsBuilder isFree(boolean isFree) {
+        this.isFree = Boolean.toString(isFree);
+        return this;
+    }
+
     public QueryParamsBuilder categories(String categories){
         this.categories = categories;
         return this;
     }
 
-    public QueryParamsBuilder lon(String lon){
+
+    public QueryParamsBuilder longitude(double lon) {
         this.lon = lon;
         return this;
     }
 
-    public QueryParamsBuilder lat(String lat){
+    public QueryParamsBuilder latitude(double lat) {
         this.lat = lat;
         return this;
     }
 
-    public QueryParamsBuilder radius(String radius){ //raduis is int?
+    public QueryParamsBuilder radius(int radius) { //raduis is int?
         this.radius = radius;
         return this;
     }
