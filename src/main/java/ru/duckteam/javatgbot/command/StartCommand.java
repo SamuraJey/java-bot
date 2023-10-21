@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartCommand extends BaseCommand implements Command {
+public class StartCommand extends BaseCommand {
     @Override
     public String getCommandIdentifier() {
         return "start";

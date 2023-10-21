@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventsCommand extends BaseCommand implements Command {
+public class EventsCommand extends BaseCommand {
     @Override
     public String getCommandIdentifier() {
         return "events";
