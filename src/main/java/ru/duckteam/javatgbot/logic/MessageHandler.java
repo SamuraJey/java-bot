@@ -6,6 +6,7 @@ import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.Handler;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.apache.commons.io.IOUtils.writer;
@@ -15,6 +16,7 @@ public class MessageHandler implements Handler {
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
     private final Map<String, String> dictionary;
     //private Integer currentMode = 1;
+    private final Map<String, String> userStatus;
 
     public MessageHandler() throws Exception {
 
@@ -24,6 +26,7 @@ public class MessageHandler implements Handler {
                 "/events", apiHandler.getResponse(),
                 "/A" ,"TEST"
         );
+        userStatus = new HashMap<>();
     }
 
     @Override
@@ -45,14 +48,16 @@ public class MessageHandler implements Handler {
                     request.getMessageId(),
                     request.getMessage(),
                     dictionary.get(key));
+            userStatus.put(chatId,key);
             writer.writeAnswer(response);
-        } else {
+        } else if (userStatus.containsKey(chatId)){
             response = new BotResponse(request.getUserName(),
                     request.getUserId(),
                     request.getChatId(),
                     request.getMessageId(),
                     request.getMessage(),
-                    request.getMessage().getText());
+                    dictionary.get(userStatus.get(chatId)));
+            userStatus.remove(chatId,key);
             writer.writeAnswer(response);
             }
 
