@@ -1,33 +1,29 @@
 package ru.duckteam.javatgbot.logic;
 
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 public final class BotRequest {
-    private final User userName;
-    private final Long userId;
     private final Long chatId;
-    private final Integer messageId;
+    private final String message;
 
-    public BotRequest(User userName, Long userId, Long chatId, Integer messageId) {
-        this.userName = userName;
-        this.userId = userId;
+
+    public BotRequest(Long chatId, String message) {
         this.chatId = chatId;
-        this.messageId = messageId;
-    }
+        this.message = message;
 
-    public String getUserName() {
-        return userName.getUserName();
-    }
-
-    public Long getUserId() {
-        return userId;
     }
 
     public Long getChatId() {
         return chatId;
     }
 
-    public Integer getMessageId() {
-        return messageId;
+    public String getMessage() {
+
+        return message;
+        // TODO Необходимо заменить Message на внутренюю абстракциию (т.е. сделать текст)
+        // DTO - Data transfer object
     }
+
+
 }
