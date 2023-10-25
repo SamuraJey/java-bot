@@ -14,7 +14,6 @@ import java.util.Map;
 public class MessageHandler implements Handler {
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
     private final List<BotCommand> commands;
-
     public MessageHandler(List<BotCommand> commands) {
         this.commands = commands;
     }
@@ -26,7 +25,7 @@ public class MessageHandler implements Handler {
         Done_TODO Или, что бы он отправлял ивенты сразу после команды, но переходил после этого в режим /echo
         TODO Сейчас если один пользователь переключает режим, то он меняется у всех пользователей, надо как-то исправлять.
         */
-        BotResponse response;
+        //BotResponse response;
 
         for (BotCommand command : commands) {
             if (command.needExecute(request)) {
@@ -34,7 +33,7 @@ public class MessageHandler implements Handler {
                 break;
             }
         }
-        // TODO Венрунть логи
-//        LOGS.info("Получено сообщение ID=%s %s %s".formatted(request.getMessageId(), request.getUserName(), request.getMessage().getText()));
+        // Done_TODO Венрунть логи
+        LOGS.info("Получено сообщение ID=%s %s".formatted(request.getChatId(), request.getMessage()));
     }
 }

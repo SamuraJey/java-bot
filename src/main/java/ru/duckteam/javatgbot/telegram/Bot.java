@@ -6,10 +6,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
+import ru.duckteam.javatgbot.Handler;
 import ru.duckteam.javatgbot.MessageConverter;
+import ru.duckteam.javatgbot.logic.BotCommand;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.MessageHandler;
+import ru.duckteam.javatgbot.logic.command.EchoCommand;
+import ru.duckteam.javatgbot.logic.command.EventsCommand;
 
 import java.util.List;
 
@@ -17,8 +21,9 @@ import java.util.List;
 public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final String botName;
     private final MessageConverter reader = new TelegramMessageConverter();
-    private final MessageHandler handler = new MessageHandler(List.of()); //TODO создавать команды здесь + внелрять в них UserStatusService
-
+    private final EventsCommand eventsCommand = new EventsCommand();
+    private final EchoCommand echoCommand = new EchoCommand();
+    private final Handler handler = new MessageHandler(List.of(new BotCommand[]{echoCommand, eventsCommand})); //TODO создавать команды здесь + внелрять в них UserStatusService
 
     public Bot(String apiKey, String botName){
         super(apiKey);

@@ -4,9 +4,8 @@ import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.logic.BotCommand;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
+import ru.duckteam.javatgbot.logic.UserStatusService;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
-
-import java.util.Map;
 
 public class EventsCommand implements BotCommand {
 
