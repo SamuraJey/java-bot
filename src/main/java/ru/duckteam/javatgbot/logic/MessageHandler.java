@@ -14,22 +14,25 @@ import java.util.Map;
 public class MessageHandler implements Handler {
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
     private final List<BotCommand> commands;
+    private final UserStatusService userStatus;
     public MessageHandler(List<BotCommand> commands) {
         this.commands = commands;
+        userStatus = new UserStatusService();
     }
+
 
     @Override
     public void handle(BotRequest request, AnswerWriter writer) {
         /*
         Done_TODO Сейчас бот при выборе режима /events сразу после команды отправляет все ивенты.
         Done_TODO Или, что бы он отправлял ивенты сразу после команды, но переходил после этого в режим /echo
-        TODO Сейчас если один пользователь переключает режим, то он меняется у всех пользователей, надо как-то исправлять.
+        Done_TODO Сейчас если один пользователь переключает режим, то он меняется у всех пользователей, надо как-то исправлять.
         */
         //BotResponse response;
 
         for (BotCommand command : commands) {
-            if (command.needExecute(request)) {
-                command.execute(request, writer);
+            if (command.needExecute(request,userStatus)) {
+                command.execute(request, writer,userStatus);
                 break;
             }
         }
