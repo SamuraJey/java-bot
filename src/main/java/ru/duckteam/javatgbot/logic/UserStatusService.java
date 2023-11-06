@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class UserStatusService {
 
-    private final static String[] arrayCommands = {"/echo","/events"};
+    private final static String[] arrayCommands = {"/echo","/events","/start"};
     private final Map<Long, UserData> userStatus = new HashMap<>();
     //TODO вынести всб логику хранения состояния пользователей сюда
 

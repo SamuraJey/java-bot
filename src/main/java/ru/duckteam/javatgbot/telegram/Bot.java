@@ -14,6 +14,7 @@ import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.MessageHandler;
 import ru.duckteam.javatgbot.logic.command.EchoCommand;
 import ru.duckteam.javatgbot.logic.command.EventsCommand;
+import ru.duckteam.javatgbot.logic.command.StartCommand;
 
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final MessageConverter reader = new TelegramMessageConverter();
     private final EventsCommand eventsCommand = new EventsCommand();
     private final EchoCommand echoCommand = new EchoCommand();
-    private final Handler handler = new MessageHandler(List.of(new BotCommand[]{echoCommand, eventsCommand})); //TODO создавать команды здесь + внелрять в них UserStatusService
+    private final StartCommand startCommand = new StartCommand();
+    private final Handler handler = new MessageHandler(List.of(new BotCommand[]{echoCommand, eventsCommand,startCommand})); //TODO создавать команды здесь + внелрять в них UserStatusService
 
     public Bot(String apiKey, String botName){
         super(apiKey);

@@ -10,7 +10,7 @@ public class EchoCommand implements BotCommand {
     private static final String echoString = "/echo";
     @Override
     public boolean needExecute(BotRequest request, UserStatusService userStatus) {
-        if(userStatus.isEmpty() || !userStatus.getUserStatus(request.getChatId()).equals(echoString) || userStatus.isCommand(request.getMessage())) {
+        if(!userStatus.getUserStatus(request.getChatId()).equals(echoString) || userStatus.isCommand(request.getMessage())) {
             if (echoString.equals(request.getMessage())){
                 userStatus.setUserStatus(request.getChatId(), echoString);
             }
