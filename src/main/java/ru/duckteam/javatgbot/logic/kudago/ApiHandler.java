@@ -2,11 +2,16 @@ package ru.duckteam.javatgbot.logic.kudago;
 
 import org.json.JSONObject;
 
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 public class ApiHandler {
     final JSONGetterFromURL getterFromURL = new JSONGetterFromURL();
     final JSONParser jsonParser = new JSONParser();
 
-    public String getResponse(String location, boolean isFree) throws Exception {
+
+    public String getResponse(String location, boolean isFree) throws URISyntaxException, IOException {
 
         //CreateURL url = new CreateURL();
         UnpackerURL unpacker = new UnpackerURL(CreateURL.getUrl(location,isFree));

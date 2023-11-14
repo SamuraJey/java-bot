@@ -9,7 +9,6 @@ import ru.duckteam.javatgbot.logic.UserStatusService;
 public class EventsCommand implements BotCommand {
     private static final String eventsString = "/events";
 
-            // TODO Разделить Map на три отдельных класса, каждый из которых будет обрабатывать свою часть логики
     @Override
     public boolean needExecute(BotRequest request, UserStatusService userStatus) {
         if(!userStatus.getUserStatus(request.getChatId()).equals(eventsString) || userStatus.isCommand(request.getMessage())) {
@@ -17,6 +16,7 @@ public class EventsCommand implements BotCommand {
                 userStatus.setUserStatus(request.getChatId(), eventsString);
             }
             return eventsString.equals(request.getMessage());
+            // TODO вынести в handler
         }
         return true;
     }
@@ -38,7 +38,7 @@ public class EventsCommand implements BotCommand {
         }
     }
 
-    private String getApiAnswer(String param,Long chatId,UserStatusService userStatus) throws Exception {
-        return userStatus.getAnswer(chatId,param);
+    private String getApiAnswer(String param,Long chatId,UserStatusService userStatus) {
+        return userStatus.getAnswer(param,chatId);
     }
 }

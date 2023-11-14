@@ -21,7 +21,6 @@ public final class BotRequest {
     public String getMessage() {
 
         return message;
-        // TODO Необходимо заменить Message на внутренюю абстракциию (т.е. сделать текст)
         // DTO - Data transfer object
     }
 

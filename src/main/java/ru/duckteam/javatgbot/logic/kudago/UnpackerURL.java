@@ -1,8 +1,10 @@
 package ru.duckteam.javatgbot.logic.kudago;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 public class UnpackerURL {
     private final String urlString;
@@ -12,7 +14,7 @@ public class UnpackerURL {
         this.urlString = urlString;
     }
 
-    public String readUrl() throws Exception {
+    public String readUrl() throws URISyntaxException, IOException {
         BufferedReader reader = null;
         try {
             URI url = new URI(urlString);

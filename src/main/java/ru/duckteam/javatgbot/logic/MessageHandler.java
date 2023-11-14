@@ -19,16 +19,11 @@ public class MessageHandler implements Handler {
         this.commands = commands;
         userStatus = new UserStatusService();
     }
+    // TODO создавать команды внутри коструктора или возможно передавать как параметр
 
 
     @Override
     public void handle(BotRequest request, AnswerWriter writer) {
-        /*
-        Done_TODO Сейчас бот при выборе режима /events сразу после команды отправляет все ивенты.
-        Done_TODO Или, что бы он отправлял ивенты сразу после команды, но переходил после этого в режим /echo
-        Done_TODO Сейчас если один пользователь переключает режим, то он меняется у всех пользователей, надо как-то исправлять.
-        */
-        //BotResponse response;
 
         for (BotCommand command : commands) {
             if (command.needExecute(request,userStatus)) {
@@ -36,7 +31,6 @@ public class MessageHandler implements Handler {
                 break;
             }
         }
-        // Done_TODO Венрунть логи
         LOGS.info("Получено сообщение ID=%s %s".formatted(request.getChatId(), request.getMessage()));
     }
 }

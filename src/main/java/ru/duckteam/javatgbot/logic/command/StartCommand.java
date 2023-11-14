@@ -10,7 +10,7 @@ public class StartCommand implements BotCommand {
     private static final String startString = "/start";
 
     public boolean needExecute(BotRequest request, UserStatusService userStatus) {
-        return userStatus.isEmpty();
+        return userStatus.isEmpty(); // TODO ошибка, работает только для 1 пользователя
     }
 
     @Override
@@ -24,8 +24,8 @@ public class StartCommand implements BotCommand {
     private String getAnswer(UserStatusService userStatus,BotRequest request) {
         if (request.getMessage().equals(startString)){
             userStatus.setUserStatus(request.getChatId(), startString);
-            return "write /echo or /events";
+            return "Напиши /echo или /events";
         }
-        return "write /start";
+        return "Напиши /start";
     }
 }
