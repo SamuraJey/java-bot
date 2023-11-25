@@ -1,31 +1,39 @@
 package ru.duckteam.javatgbot.logic.command;
 
 import ru.duckteam.javatgbot.AnswerWriter;
-import ru.duckteam.javatgbot.logic.BotCommand;
-import ru.duckteam.javatgbot.logic.BotRequest;
-import ru.duckteam.javatgbot.logic.BotResponse;
-import ru.duckteam.javatgbot.logic.UserStatusService;
+import ru.duckteam.javatgbot.logic.*;
 
 public class StartCommand implements BotCommand {
     private static final String startString = "/start";
 
-    public boolean needExecute(BotRequest request, UserStatusService userStatus) {
-        return userStatus.isEmpty(); // TODO ошибка, работает только для 1 пользователя
+    @Override
+    public boolean needExecute(String message, UserData userData) {
+        if (userData == null) {
+            return true;
+        }
+        return userData.getUserCommand().equals(startString);
     }
 
     @Override
-    public void execute(BotRequest request, AnswerWriter writer, UserStatusService userStatus) {
-        BotResponse response = new BotResponse(
-                request.getChatId(),
-                getAnswer(userStatus,request));
-        writer.writeAnswer(response);
+    public void execute(String message, Long chatId, AnswerWriter writer,UserData userData){
+        try {
+            BotResponse response = new BotResponse(
+                    chatId,
+                    getAnswer(message));
+            writer.writeAnswer(response);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private String getAnswer(UserStatusService userStatus,BotRequest request) {
-        if (request.getMessage().equals(startString)){
-            userStatus.setUserStatus(request.getChatId(), startString);
+    private String getAnswer(String message) {
+        if (message.equals(startString)){
             return "Напиши /echo или /events";
         }
         return "Напиши /start";
+    }
+    public String getNameCommand() {
+        return startString;
     }
 }

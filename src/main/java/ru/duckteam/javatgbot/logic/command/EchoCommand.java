@@ -1,36 +1,40 @@
 package ru.duckteam.javatgbot.logic.command;
 
-import ru.duckteam.javatgbot.logic.BotCommand;
+import ru.duckteam.javatgbot.logic.*;
 import ru.duckteam.javatgbot.AnswerWriter;
-import ru.duckteam.javatgbot.logic.BotRequest;
-import ru.duckteam.javatgbot.logic.BotResponse;
-import ru.duckteam.javatgbot.logic.UserStatusService;
 
 public class EchoCommand implements BotCommand {
     private static final String echoString = "/echo";
+
     @Override
-    public boolean needExecute(BotRequest request, UserStatusService userStatus) {
-        if(!userStatus.getUserStatus(request.getChatId()).equals(echoString) || userStatus.isCommand(request.getMessage())) {
-            if (echoString.equals(request.getMessage())){
-                userStatus.setUserStatus(request.getChatId(), echoString);
-            }
-            return echoString.equals(request.getMessage());
+    public boolean needExecute(String message,UserData userData) {
+        if(userData == null || !userData.getUserCommand().equals(echoString) || userData.IsCommand(message)) {
+            return echoString.equals(message);
         }
         return true;
     }
 
     @Override
-    public void execute(BotRequest request, AnswerWriter writer,UserStatusService userStatus) {
-        BotResponse response = new BotResponse(
-                request.getChatId(),
-                getAnswer(request));
-        writer.writeAnswer(response);
+    public void execute(String message, Long chatId, AnswerWriter writer,UserData userData){
+        try {
+            BotResponse response = new BotResponse(
+                    chatId,
+                    getAnswer(message));
+            writer.writeAnswer(response);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private String getAnswer(BotRequest request) {
-        if (request.getMessage().equals(echoString)){
+    private String getAnswer(String message) {
+        if (message.equals(echoString)){
             return "Выбран режим echo!";
         }
-        return request.getMessage();
+        return message;
+    }
+
+    public String getNameCommand() {
+        return echoString;
     }
 }

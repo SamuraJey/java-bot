@@ -25,7 +25,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final EventsCommand eventsCommand = new EventsCommand();
     private final EchoCommand echoCommand = new EchoCommand();
     private final StartCommand startCommand = new StartCommand();
-    private final Handler handler = new MessageHandler(List.of(echoCommand, eventsCommand,startCommand)); //TODO создавать команды здесь + внелрять в них UserStatusService
+    private final Handler handler = new MessageHandler(List.of(echoCommand, eventsCommand,startCommand));
     // TODO добавить userStatusServer в аргументы команд
     public Bot(String apiKey, String botName){
         super(apiKey);

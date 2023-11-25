@@ -6,10 +6,10 @@ import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.Handler;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-// TODO Избавиться от всего лишнего, комменты, старый код и т.д.
 
 public class MessageHandler implements Handler {
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
@@ -24,10 +24,11 @@ public class MessageHandler implements Handler {
 
     @Override
     public void handle(BotRequest request, AnswerWriter writer) {
-
+        UserData userData = userStatus.getUserData(request.getChatId());
         for (BotCommand command : commands) {
-            if (command.needExecute(request,userStatus)) {
-                command.execute(request, writer,userStatus);
+            if (command.needExecute(request.getMessage(),userData)) {
+                userStatus.setUserStatus(request.getChatId(), command.getNameCommand());
+                command.execute(request.getMessage(), request.getChatId(),writer,userData);
                 break;
             }
         }
