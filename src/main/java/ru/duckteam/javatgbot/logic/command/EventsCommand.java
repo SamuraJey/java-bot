@@ -6,7 +6,6 @@ import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.logic.*;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
-import javax.ws.rs.core.Request;
 import java.util.List;
 import java.util.Map;
 
@@ -14,34 +13,38 @@ public class EventsCommand implements BotCommand {
     private static final String eventsString = "/events";
     private final static List<String> questions = List.of(
             "Ты выбрал режим событий, выбери город в котром будем искать их, Екатеринбург или Москва?",
-            "Хорошо, теперь давай определимся, нужно ли показать платные места, ответь да или нет"
-    );
+            "Хорошо, теперь давай определимся, нужно ли показать платные места, ответь да или нет");
     private final static int lengthQuestions = questions.size();
     private final static List<String[]> expectedAnswers = List.of(new String[]{"Екатеринбург", "Москва"},
             new String[]{"Да", "Нет"});
     private final static String errorAnswer = "Введи еще раз, я не понял";
-    private int countQuestions = 0;
     private final static Map<String,String> paramForApi = Map.of("Екатеринбург","ekb",
             "Москва","msk",
             "Да","true" ,
             "Нет","false");
-    private final static ApiHandler apiHandler = new ApiHandler();
+    private static final ApiHandler apiHandler = new ApiHandler();
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
 
+    private final UserStatusService userStatusService;
+
+    public EventsCommand(UserStatusService userStatusService) {
+        this.userStatusService = userStatusService;
+    }
+
     @Override
-    public boolean needExecute(String message,UserData userData) {
-        if(userData == null || !userData.getUserCommand().equals(eventsString) || userData.IsCommand(message)) {
+    public boolean needExecute(String message, UserStatus userStatus) {
+        if(userStatus == null || !userStatus.getUserCommand().equals(eventsString) || userStatus.IsCommand(message)) {
             return eventsString.equals(message);
         }
         return true;
     }
 
     @Override
-    public void execute(String message, Long chatId, AnswerWriter writer,UserData userData){
+    public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus){
         try {
             BotResponse response = new BotResponse(
                     chatId,
-                    getApiAnswer(userData, message, chatId));
+                    getApiAnswer(userStatus, message, chatId));
             writer.writeAnswer(response);
         }
         catch (Exception e) {
@@ -49,26 +52,29 @@ public class EventsCommand implements BotCommand {
         }
     }
 
-    private String getApiAnswer(UserData userData,String message, Long chatId) {
+    private String getApiAnswer(UserStatus userStatus, String message, Long chatId) {
         // TODO .trim().equalsIgnoreCase();
 
-        if (countQuestions == 0){
-            return questions.get(countQuestions++);
+        if (userStatus.getCountQuestions() == 0){
+            return questions.get(userStatus.incrementCountQuestions());
         }
         else {
-            String[] answers = expectedAnswers.get(countQuestions-1);
+            String[] answers = expectedAnswers.get(userStatus.getCountQuestions()-1);
             for (String answer : answers) {
                 if (message.trim().equalsIgnoreCase(answer)) {
-                    userData.addParam(paramForApi.get(answer));
-                    if (countQuestions == lengthQuestions) {
+                    userStatus.addParam(paramForApi.get(answer));
+                    if (userStatus.getCountParam() == lengthQuestions) {
+                        String location = userStatus.getLocation();
+                        boolean isFree = userStatus.getIsFree();
+                        userStatusService.RemoveUserStatus(chatId);
                         try {
-                            return apiHandler.getResponse(userData.getLocation(), userData.getIsFree());
+                            return apiHandler.getResponse(location,isFree);
                         } catch (Exception e) {
                             LOGS.error("Error during handle [%s] by user [%s]".formatted(message, chatId), e);
                             return "Что то пошло не так";
                         }
                     } else {
-                        return questions.get(countQuestions++);
+                        return questions.get(userStatus.incrementCountQuestions());
                     }
                 }
             }

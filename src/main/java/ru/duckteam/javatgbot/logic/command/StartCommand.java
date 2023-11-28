@@ -7,15 +7,15 @@ public class StartCommand implements BotCommand {
     private static final String startString = "/start";
 
     @Override
-    public boolean needExecute(String message, UserData userData) {
-        if (userData == null) {
+    public boolean needExecute(String message, UserStatus userStatus) {
+        if (userStatus == null) {
             return true;
         }
-        return userData.getUserCommand().equals(startString);
+        return userStatus.getUserCommand().equals(startString);
     }
 
     @Override
-    public void execute(String message, Long chatId, AnswerWriter writer,UserData userData){
+    public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus){
         try {
             BotResponse response = new BotResponse(
                     chatId,

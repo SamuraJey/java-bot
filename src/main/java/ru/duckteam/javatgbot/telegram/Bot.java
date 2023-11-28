@@ -8,10 +8,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.Handler;
 import ru.duckteam.javatgbot.MessageConverter;
-import ru.duckteam.javatgbot.logic.BotCommand;
 import ru.duckteam.javatgbot.logic.BotRequest;
 import ru.duckteam.javatgbot.logic.BotResponse;
 import ru.duckteam.javatgbot.logic.MessageHandler;
+import ru.duckteam.javatgbot.logic.UserStatusService;
 import ru.duckteam.javatgbot.logic.command.EchoCommand;
 import ru.duckteam.javatgbot.logic.command.EventsCommand;
 import ru.duckteam.javatgbot.logic.command.StartCommand;
@@ -21,15 +21,17 @@ import java.util.List;
 
 public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final String botName;
-    private final MessageConverter reader = new TelegramMessageConverter();
-    private final EventsCommand eventsCommand = new EventsCommand();
-    private final EchoCommand echoCommand = new EchoCommand();
-    private final StartCommand startCommand = new StartCommand();
-    private final Handler handler = new MessageHandler(List.of(echoCommand, eventsCommand,startCommand));
+    private final MessageConverter converter = new TelegramMessageConverter();
+    private final Handler handler;
     // TODO добавить userStatusServer в аргументы команд
+
     public Bot(String apiKey, String botName){
         super(apiKey);
         this.botName = botName;
+
+        UserStatusService userStatusService = new UserStatusService();
+        EventsCommand eventsCommand = new EventsCommand(userStatusService);
+        handler = new MessageHandler(userStatusService, List.of(new EchoCommand(), eventsCommand, new StartCommand()));
     }
 
     @Override
@@ -52,7 +54,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
 
     @Override
     public void onUpdateReceived(Update update) {
-        BotRequest request = reader.convertMessage(update);
+        BotRequest request = converter.convertMessage(update);
         handler.handle(request, this);
     }
 }

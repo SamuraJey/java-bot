@@ -1,34 +1,32 @@
 package ru.duckteam.javatgbot.logic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserStatusService {
-    private final Map<Long, UserData> userStatus = new HashMap<>();
+    private final Map<Long, UserStatus> userStatus = new HashMap<>();
 
     public void setUserStatus(Long chatId, String status) {
-        UserData userData = new UserData();
-        if (!(userStatus.get(chatId) == null)) {
-            userData = userStatus.get(chatId);
+        UserStatus userStatus = new UserStatus();
+        if (!(this.userStatus.get(chatId) == null)) {
+            userStatus = this.userStatus.get(chatId);
         }
 
-        userData.setUserCommand(status);
-        userStatus.put(chatId, userData);
+        userStatus.setUserCommand(status);
+        this.userStatus.put(chatId, userStatus);
     }
 
     public void RemoveUserStatus(Long chatId) {
         userStatus.remove(chatId);
     }
 
-    public UserData getUserData(Long chatId) {
+    public UserStatus getUserData(Long chatId) {
             return userStatus.get(chatId);
     }
     // TODO return null, возвращать userData
 
-    public boolean needDeleteStatus(Long chatId) {
+    /*public boolean needDeleteStatus(Long chatId) {
         return userStatus.get(chatId).needDelete();
-    }
+    }*/
+
 }

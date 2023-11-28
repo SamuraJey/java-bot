@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserData {
+public class UserStatus {
     private String userCommand = "";
     private List<String> params = new ArrayList<>();
-    private int countParam = 0;
+    private int countQuestions = 0;
     private final static String[] arrayCommands = {"/echo","/events","/start"};
 
-    public UserData(){
+    public UserStatus(){
         params = new ArrayList<>();
     }
-    public boolean needDelete(){return params.size() == countParam;}
+    //public boolean needDelete(){return params.size() == countParam;}
     public String getLocation(){
         return params.get(0);
     }
@@ -38,4 +38,7 @@ public class UserData {
 
     public int getCountParam(){ return params.size(); }
     public boolean IsCommand(String command){ return Arrays.asList(arrayCommands).contains(command); }
+    public int getCountQuestions(){return countQuestions;}
+    public int incrementCountQuestions(){return countQuestions++;}
+
 }
