@@ -23,7 +23,6 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
     private final String botName;
     private final MessageConverter converter = new TelegramMessageConverter();
     private final Handler handler;
-    // TODO добавить userStatusServer в аргументы команд
 
     public Bot(String apiKey, String botName){
         super(apiKey);
@@ -31,7 +30,9 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
 
         UserStatusService userStatusService = new UserStatusService();
         EventsCommand eventsCommand = new EventsCommand(userStatusService);
-        handler = new MessageHandler(userStatusService, List.of(new EchoCommand(), eventsCommand, new StartCommand()));
+        EchoCommand echoCommand = new EchoCommand(userStatusService);
+        StartCommand startCommand = new StartCommand(userStatusService);
+        handler = new MessageHandler(userStatusService, List.of(echoCommand, eventsCommand, startCommand));
     }
 
     @Override

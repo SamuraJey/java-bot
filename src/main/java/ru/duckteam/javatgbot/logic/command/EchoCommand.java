@@ -5,11 +5,20 @@ import ru.duckteam.javatgbot.AnswerWriter;
 
 public class EchoCommand implements BotCommand {
     private static final String echoString = "/echo";
+    private final UserStatusService userStatusService;
+
+    public EchoCommand(UserStatusService userStatusService) {
+        this.userStatusService = userStatusService;
+    }
 
     @Override
-    public boolean needExecute(String message, UserStatus userStatus) {
+    public boolean needExecute(String message, UserStatus userStatus,Long chatId) {
         if(userStatus == null || !userStatus.getUserCommand().equals(echoString) || userStatus.IsCommand(message)) {
-            return echoString.equals(message);
+            if (echoString.equals(message)){
+                userStatusService.clearUserStatus(chatId);
+                return true;
+            }
+            return false;
         }
         return true;
     }

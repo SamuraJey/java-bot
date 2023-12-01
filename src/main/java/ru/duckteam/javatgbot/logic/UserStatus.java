@@ -14,31 +14,25 @@ public class UserStatus {
     public UserStatus(){
         params = new ArrayList<>();
     }
-    //public boolean needDelete(){return params.size() == countParam;}
     public String getLocation(){
         return params.get(0);
     }
-
-    public boolean getIsFree(){
-
-        return Boolean.parseBoolean(params.get(1));
-    }
-
+    public boolean getIsFree(){return Boolean.parseBoolean(params.get(1));}
     public void setUserCommand(String userCommand){
         this.userCommand = userCommand;
     }
-
     public String getUserCommand(){
         return userCommand;
     }
-
-    public boolean arrayParamIsEmpty(){ return params.isEmpty(); }
-
     public void addParam(String param){ params.add(param); }
-
     public int getCountParam(){ return params.size(); }
     public boolean IsCommand(String command){ return Arrays.asList(arrayCommands).contains(command); }
     public int getCountQuestions(){return countQuestions;}
     public int incrementCountQuestions(){return countQuestions++;}
+    public void deleteUserCommand(){userCommand = "";}
+    public void deleteParams(){
+        params = new ArrayList<>();
+        countQuestions = 0;
+    }
 
 }

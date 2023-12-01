@@ -5,13 +5,24 @@ import ru.duckteam.javatgbot.logic.*;
 
 public class StartCommand implements BotCommand {
     private static final String startString = "/start";
+    private final UserStatusService userStatusService;
 
+    public StartCommand(UserStatusService userStatusService) {
+        this.userStatusService = userStatusService;
+    }
     @Override
-    public boolean needExecute(String message, UserStatus userStatus) {
+    public boolean needExecute(String message, UserStatus userStatus,Long chatId) {
         if (userStatus == null) {
             return true;
         }
-        return userStatus.getUserCommand().equals(startString);
+
+        if (startString.equals(message)){
+            userStatusService.clearUserStatus(chatId);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

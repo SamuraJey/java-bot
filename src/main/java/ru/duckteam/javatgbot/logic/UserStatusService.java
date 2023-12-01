@@ -4,29 +4,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserStatusService {
-    private final Map<Long, UserStatus> userStatus = new HashMap<>();
+    private final Map<Long, UserStatus> userStatusMap = new HashMap<>();
 
     public void setUserStatus(Long chatId, String status) {
         UserStatus userStatus = new UserStatus();
-        if (!(this.userStatus.get(chatId) == null)) {
-            userStatus = this.userStatus.get(chatId);
+        if (!(this.userStatusMap.get(chatId) == null)) {
+            userStatus = this.userStatusMap.get(chatId);
         }
 
         userStatus.setUserCommand(status);
-        this.userStatus.put(chatId, userStatus);
+        this.userStatusMap.put(chatId, userStatus);
     }
 
-    public void RemoveUserStatus(Long chatId) {
-        userStatus.remove(chatId);
+    public void removeUserStatus(Long chatId) {
+        userStatusMap.remove(chatId);
+    }
+
+    public void clearUserStatus(Long chatId){
+        UserStatus userStatus = userStatusMap.get(chatId);
+        userStatus.deleteUserCommand();
+        userStatus.deleteParams();
     }
 
     public UserStatus getUserData(Long chatId) {
-            return userStatus.get(chatId);
+            return userStatusMap.get(chatId);
     }
-    // TODO return null, возвращать userData
-
-    /*public boolean needDeleteStatus(Long chatId) {
-        return userStatus.get(chatId).needDelete();
-    }*/
-
 }

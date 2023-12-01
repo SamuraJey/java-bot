@@ -15,14 +15,13 @@ public class MessageHandler implements Handler {
         this.commands = commands;
         this.userStatusService = userStatusService;
     }
-    // TODO создавать команды внутри коструктора или возможно передавать как параметр
 
 
     @Override
     public void handle(BotRequest request, AnswerWriter writer) {
         UserStatus userStatus = userStatusService.getUserData(request.getChatId());
         for (BotCommand command : commands) {
-            if (command.needExecute(request.getMessage(), userStatus)) {
+            if (command.needExecute(request.getMessage(), userStatus, request.getChatId())) {
                 userStatusService.setUserStatus(request.getChatId(), command.getNameCommand());
                 command.execute(request.getMessage(), request.getChatId(),writer, userStatus);
                 break;
