@@ -11,6 +11,7 @@ public class MessageHandler implements Handler {
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
     private final List<BotCommand> commands;
     private final UserStatusService userStatusService;
+
     public MessageHandler(UserStatusService userStatusService, List<BotCommand> commands) {
         this.commands = commands;
         this.userStatusService = userStatusService;
@@ -20,10 +21,12 @@ public class MessageHandler implements Handler {
     @Override
     public void handle(BotRequest request, AnswerWriter writer) {
         UserStatus userStatus = userStatusService.getUserData(request.getChatId());
+
         for (BotCommand command : commands) {
             if (command.needExecute(request.getMessage(), userStatus, request.getChatId())) {
                 userStatusService.setUserStatus(request.getChatId(), command.getNameCommand());
-                command.execute(request.getMessage(), request.getChatId(),writer, userStatus);
+//                userStatusService.startCleanupTimer(request.getChatId());
+                command.execute(request.getMessage(), request.getChatId(), writer, userStatus);
                 break;
             }
         }
