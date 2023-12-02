@@ -1,45 +1,58 @@
 package ru.duckteam.javatgbot.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Deprecated
 //Это фигня которю я попытасля сделать
 public class UserTimer {
 
-    private final long CLEANUP_DELAY = 1000; //* 60 * 60 * 24 * 7; // 1 week in milliseconds
-    private Timer timer;
+    private final long CLEANUP_DELAY = 1000;// * 60 * 60 * 24 * 7; // 1 week in milliseconds
+    private static final Timer timer = new Timer();
     private UserStatusService userStatusService;
-    private Long chatId;
+    private Map<Long, TimerTask> userTimerTask;
+    private static final Logger LOGS = LoggerFactory.getLogger(UserTimer.class);
 
-    private Map lastVisited;
 
-
-    public UserTimer(UserStatusService userStatusService, Long chatId) {
+    public UserTimer(UserStatusService userStatusService) {
         this.userStatusService = userStatusService;
-        this.chatId = chatId;
-//        this.startCleanupTimer(userStatusService, chatId);
-        lastVisited = new HashMap();
+        userTimerTask = new HashMap();
     }
 
-    public void timerIfNeeded() {
+    /*public void timerIfNeeded() {
         if (userStatusService.getUserData(chatId) != null) {
 
 
         }
-    }
+    }*/
 
-    public void startCleanupTimer(UserStatusService userStatusService, Long chatId) {
+    public void startCleanupTimer(Long chatId) {
 
-        timer = new Timer();
+        if (userStatusService.getUserData(chatId) == null){
+            return;
+        }
+
+        LOGS.info("request [%s]".formatted(chatId));
+        if (userTimerTask.get(chatId) != null){
+            LOGS.info("delete task [%s]".formatted(chatId));
+            TimerTask task = userTimerTask.get(chatId);
+            task.cancel();
+        }
 
         TimerTask task = new TimerTask() {
             public void run() {
-                userStatusService.clearUserStatus(chatId);
+                userStatusService.removeUserStatus(chatId);
+                userTimerTask.remove(chatId);
             }
         };
         timer.schedule(task, CLEANUP_DELAY);
+        userTimerTask.put(chatId, task);
+        LOGS.info("set task [%s]".formatted(chatId));
     }
 }

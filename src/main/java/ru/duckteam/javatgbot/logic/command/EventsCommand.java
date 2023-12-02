@@ -34,6 +34,7 @@ public class EventsCommand implements BotCommand {
         if (userStatus == null || !userStatus.getUserCommand().equals(eventsString) || userStatus.IsCommand(message)) {
             if(eventsString.equals(message)){
                 userStatusService.clearUserStatus(chatId);
+                userStatusService.setUserStatus(chatId, eventsString);
                 return true;
             }
             return false;
@@ -88,9 +89,5 @@ public class EventsCommand implements BotCommand {
         } else {
             return questions.get(userStatus.incrementCountQuestions());
         }
-    }
-    @Override
-    public String getNameCommand() {
-        return eventsString;
     }
 }

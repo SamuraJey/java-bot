@@ -13,11 +13,14 @@ public class StartCommand implements BotCommand {
     @Override
     public boolean needExecute(String message, UserStatus userStatus,Long chatId) {
         if (userStatus == null) {
+            userStatusService.setUserStatus(chatId, startString);
             return true;
         }
 
         if (startString.equals(message)){
+            userStatusService.setUserStatus(chatId, startString);
             userStatusService.clearUserStatus(chatId);
+
             return true;
         }
         else {
@@ -43,8 +46,5 @@ public class StartCommand implements BotCommand {
             return "Напиши /echo или /events";
         }
         return "Напиши /start";
-    }
-    public String getNameCommand() {
-        return startString;
     }
 }

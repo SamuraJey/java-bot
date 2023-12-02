@@ -16,6 +16,7 @@ public class EchoCommand implements BotCommand {
         if(userStatus == null || !userStatus.getUserCommand().equals(echoString) || userStatus.IsCommand(message)) {
             if (echoString.equals(message)){
                 userStatusService.clearUserStatus(chatId);
+                userStatusService.setUserStatus(chatId, echoString);
                 return true;
             }
             return false;
@@ -41,9 +42,5 @@ public class EchoCommand implements BotCommand {
             return "Выбран режим echo!";
         }
         return message;
-    }
-
-    public String getNameCommand() {
-        return echoString;
     }
 }

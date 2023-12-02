@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UserStatus {
     private String userCommand = "";
-    private List<String> params = new ArrayList<>();
+    private List<String> params;
     private int countQuestions = 0;
     private final static String[] arrayCommands = {"/echo","/events","/start"};
 
@@ -29,7 +29,6 @@ public class UserStatus {
     public boolean IsCommand(String command){ return Arrays.asList(arrayCommands).contains(command); }
     public int getCountQuestions(){return countQuestions;}
     public int incrementCountQuestions(){return countQuestions++;}
-    public void deleteUserCommand(){userCommand = "";}
     public void deleteParams(){
         params = new ArrayList<>();
         countQuestions = 0;
