@@ -7,39 +7,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ScheduledExecutorService;
 
-@Deprecated
 //Это фигня которю я попытасля сделать
 public class UserTimer {
 
-    private final long CLEANUP_DELAY = 1000;// * 60 * 60 * 24 * 7; // 1 week in milliseconds
+    private final long CLEANUP_DELAY = 1000 * 60 * 60 * 24 * 7; // 1 week in milliseconds
     private static final Timer timer = new Timer();
     private UserStatusService userStatusService;
     private Map<Long, TimerTask> userTimerTask;
     private static final Logger LOGS = LoggerFactory.getLogger(UserTimer.class);
 
-
     public UserTimer(UserStatusService userStatusService) {
         this.userStatusService = userStatusService;
-        userTimerTask = new HashMap();
+        userTimerTask = new HashMap<Long, TimerTask>();
     }
-
-    /*public void timerIfNeeded() {
-        if (userStatusService.getUserData(chatId) != null) {
-
-
-        }
-    }*/
 
     public void startCleanupTimer(Long chatId) {
 
-        if (userStatusService.getUserData(chatId) == null){
+        if (userStatusService.getUserData(chatId) == null) {
             return;
         }
 
         LOGS.info("request [%s]".formatted(chatId));
-        if (userTimerTask.get(chatId) != null){
+        if (userTimerTask.get(chatId) != null) {
             LOGS.info("delete task [%s]".formatted(chatId));
             TimerTask task = userTimerTask.get(chatId);
             task.cancel();
