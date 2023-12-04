@@ -16,4 +16,3 @@ public class JSONGetterFromURL {
         return jsonResponse;
     }
 }
-

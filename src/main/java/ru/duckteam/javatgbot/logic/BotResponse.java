@@ -1,7 +1,5 @@
 package ru.duckteam.javatgbot.logic;
 
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 public final class BotResponse {
 
     private final Long chatId;
@@ -16,7 +14,8 @@ public final class BotResponse {
         return chatId;
     }
 
-    public String getResponeString() {return responeString;}
+    public String getResponeString() {
+        return responeString;
+    }
 
 }
-

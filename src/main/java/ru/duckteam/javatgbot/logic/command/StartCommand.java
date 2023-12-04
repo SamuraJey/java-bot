@@ -10,39 +10,38 @@ public class StartCommand implements BotCommand {
     public StartCommand(UserStatusService userStatusService) {
         this.userStatusService = userStatusService;
     }
+
     @Override
-    public boolean needExecute(String message, UserStatus userStatus,Long chatId) {
+    public boolean needExecute(String message, UserStatus userStatus, Long chatId) {
         if (userStatus == null) {
             userStatusService.setUserStatus(chatId, startString);
             return true;
         }
 
-        if (startString.equals(message)){
+        if (startString.equals(message)) {
             userStatusService.setUserStatus(chatId, startString);
             userStatusService.clearUserStatus(chatId);
 
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     @Override
-    public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus){
+    public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus) {
         try {
             BotResponse response = new BotResponse(
                     chatId,
                     getAnswer(message));
             writer.writeAnswer(response);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private String getAnswer(String message) {
-        if (message.equals(startString)){
+        if (message.equals(startString)) {
             return "Напиши /echo или /events";
         }
         return "Напиши /start";

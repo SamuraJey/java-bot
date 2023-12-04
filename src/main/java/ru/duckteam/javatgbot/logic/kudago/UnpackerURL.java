@@ -9,8 +9,7 @@ import java.net.URISyntaxException;
 public class UnpackerURL {
     private final String urlString;
 
-    public UnpackerURL(String urlString)
-    {
+    public UnpackerURL(String urlString) {
         this.urlString = urlString;
     }
 

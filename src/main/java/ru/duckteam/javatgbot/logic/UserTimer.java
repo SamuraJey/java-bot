@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//Это фигня которю я попытасля сделать
 public class UserTimer {
 
     private final long CLEANUP_DELAY = 1000 * 60 * 60 * 24 * 7; // 1 week in milliseconds

@@ -17,7 +17,6 @@ public class QueryParamsBuilder {
     private double lat = 0;
     private int radius = 0;
 
-
     public String build() {
 
         // Добавьте параметры запроса в соответствии со спецификацией
@@ -45,7 +44,7 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public QueryParamsBuilder pageSize(int pageSize) { //page size is int?
+    public QueryParamsBuilder pageSize(int pageSize) { // page size is int?
         this.pageSize = pageSize;
         return this;
     }
@@ -60,9 +59,10 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public QueryParamsBuilder expand(String expand){
+    public QueryParamsBuilder expand(String expand) {
         // string (необязательный)
-        // Включить в выдачу более подробную информацию для указанных полей, можно несколько через запяту
+        // Включить в выдачу более подробную информацию для указанных полей, можно
+        // несколько через запяту
         // Варианты: images place location dates participants
         this.expand = expand;
         return this;
@@ -73,7 +73,7 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public QueryParamsBuilder ids(String ids){
+    public QueryParamsBuilder ids(String ids) {
         this.ids = ids;
         return this;
     }
@@ -98,11 +98,10 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public QueryParamsBuilder categories(String categories){
+    public QueryParamsBuilder categories(String categories) {
         this.categories = categories;
         return this;
     }
-
 
     public QueryParamsBuilder longitude(double lon) {
         this.lon = lon;
@@ -114,7 +113,7 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public QueryParamsBuilder radius(int radius) { //raduis is int?
+    public QueryParamsBuilder radius(int radius) { // raduis is int?
         this.radius = radius;
         return this;
     }
