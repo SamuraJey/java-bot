@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
-
 public class CreateURL {
     private static final long UNIX_DAY = 86400;
 
@@ -20,11 +18,7 @@ public class CreateURL {
         String version = "v1.4";
         String endpoint = String.format("/public-api/%s/events/", version);
         // Пользовательские значения
-        long currentTimestamp = Instant.now().getEpochSecond();
-        long prevDayTimestamp = currentTimestamp - 1000L;
-        long nextDayTimestamp = currentTimestamp + UNIX_DAY;
-        long nextWeekTimestamp = currentTimestamp + UNIX_DAY;
-
+        //long currentTimestamp = Instant.now().getEpochSecond();
         String lang = "ru";
         String fields = "id,publication_date,dates,title,short_title,slug,place,description," +
                 "location,categories,price,is_free," +
@@ -32,8 +26,8 @@ public class CreateURL {
         String orderBy = "date";
         String textFormat = "plain";
         // String location = "ekb";
-        String actualSince = String.valueOf(prevDayTimestamp);
-        String actualUntil = String.valueOf(nextDayTimestamp);
+        String actualSince = String.valueOf(firstDayTimestamp);
+        String actualUntil = String.valueOf(secondDayTimestamp);
         String url = "";
         QueryParamsBuilder builder = new QueryParamsBuilder()
                 .lang(lang)
