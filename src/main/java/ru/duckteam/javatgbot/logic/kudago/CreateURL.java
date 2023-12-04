@@ -1,6 +1,5 @@
 package ru.duckteam.javatgbot.logic.kudago;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,14 +7,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
 
-
 public class CreateURL {
     private static final long UNIX_DAY = 86400;
 
     private static final Logger LOGS = LoggerFactory.getLogger(CreateURL.class);
 
-    public static String getUrl(String location, boolean isFree) {
-        // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи кудаго
+    public static String getUrl(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp) {
+        // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи
+        // кудаго
         // KUDAGO API https://docs.kudago.com/api/
         String baseUrl = "https://kudago.com";
         String version = "v1.4";
@@ -32,7 +31,7 @@ public class CreateURL {
                 "site_url";
         String orderBy = "date";
         String textFormat = "plain";
-        //String location = "ekb";
+        // String location = "ekb";
         String actualSince = String.valueOf(prevDayTimestamp);
         String actualUntil = String.valueOf(nextDayTimestamp);
         String url = "";
@@ -45,7 +44,7 @@ public class CreateURL {
                 .isFree(isFree)
                 .actualSince(Integer.parseInt(actualSince))
                 .actualUntil(Integer.parseInt(actualUntil));
-
+        // TODO разобраться почему так парсится из лонг в стриг и в инт
         try {
             URI uri = new URI(baseUrl + endpoint)
                     .resolve(builder.build()).normalize();

@@ -30,9 +30,9 @@ public class EventsCommand implements BotCommand {
     }
 
     @Override
-    public boolean needExecute(String message, UserStatus userStatus,Long chatId) {
+    public boolean needExecute(String message, UserStatus userStatus, Long chatId) {
         if (userStatus == null || !userStatus.getUserCommand().equals(eventsString) || userStatus.IsCommand(message)) {
-            if(eventsString.equals(message)){
+            if (eventsString.equals(message)) {
                 userStatusService.clearUserStatus(chatId);
                 userStatusService.setUserStatus(chatId, eventsString);
                 return true;
@@ -67,10 +67,9 @@ public class EventsCommand implements BotCommand {
         if (firstExpectedAnswer.trim().equalsIgnoreCase(message)) {
             userStatus.addParam(paramForApi.get(firstExpectedAnswer));
         } else {
-            if (secondExpectedAnswer.trim().equalsIgnoreCase(message)){
+            if (secondExpectedAnswer.trim().equalsIgnoreCase(message)) {
                 userStatus.addParam(paramForApi.get(secondExpectedAnswer));
-            }
-            else {
+            } else {
                 return errorAnswer;
             }
         }
