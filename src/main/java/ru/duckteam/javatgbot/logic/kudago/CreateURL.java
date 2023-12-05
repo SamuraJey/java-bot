@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
 public class CreateURL {
     private static final long UNIX_DAY = 86400;
 
@@ -13,7 +14,6 @@ public class CreateURL {
     public static String getUrl(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp) {
         // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи
         // кудаго
-        // KUDAGO API https://docs.kudago.com/api/
         String baseUrl = "https://kudago.com";
         String version = "v1.4";
         String endpoint = String.format("/public-api/%s/events/", version);

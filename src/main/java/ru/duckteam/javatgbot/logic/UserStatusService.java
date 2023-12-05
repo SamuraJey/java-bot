@@ -25,6 +25,7 @@ public class UserStatusService {
         UserStatus userStatus = userStatusMap.get(chatId);
         if (userStatus != null) {
             userStatus.deleteParams();
+            userStatus.deleteUserCommand();
         }
     }
 

@@ -1,6 +1,8 @@
 package ru.duckteam.javatgbot.telegram;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -20,11 +22,12 @@ import java.util.List;
 
 
 public class Bot extends TelegramLongPollingBot implements AnswerWriter {
+    private static final Logger LOGS = LoggerFactory.getLogger(Bot.class);
     private final String botName;
     private final MessageConverter converter = new TelegramMessageConverter();
     private final Handler handler;
 
-    public Bot(String apiKey, String botName){
+    public Bot(String apiKey, String botName) {
         super(apiKey);
         this.botName = botName;
 
@@ -49,7 +52,16 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         try {
             execute(sm);                        //Actually sending the message
         } catch (TelegramApiException e) {
-            throw new RuntimeException(e);      //Any error will be printed here
+            sm = SendMessage.builder()
+                    .chatId(response.getChatId().toString()) //Who are we sending a message to
+                    .text("что-то пошло не так").build();
+            LOGS.error("can't send empty message", e);
+            // TODO Хотим чтоб при неккоректный ввод, апи возвращал в респонс налл, а о респонс проверял на налл и давал текст ошибки
+            try {
+                execute(sm);
+            } catch (TelegramApiException ex) {
+                throw new RuntimeException(e); //Any error will be printed here
+            }
         }
     }
 

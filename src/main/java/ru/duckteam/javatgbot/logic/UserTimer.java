@@ -10,15 +10,14 @@ import java.util.TimerTask;
 
 public class UserTimer {
 
-    private final long CLEANUP_DELAY = 1000 * 60 * 60 * 24 * 7; // 1 week in milliseconds
+    private static final long CLEANUP_DELAY = 1000 * 60 * 60 * 24 * 7; // 1 week in milliseconds
     private static final Timer timer = new Timer();
-    private UserStatusService userStatusService;
-    private Map<Long, TimerTask> userTimerTask;
+    private final UserStatusService userStatusService;
+    private final Map<Long, TimerTask> userTimerTask = new HashMap<>();
     private static final Logger LOGS = LoggerFactory.getLogger(UserTimer.class);
 
     public UserTimer(UserStatusService userStatusService) {
         this.userStatusService = userStatusService;
-        userTimerTask = new HashMap<Long, TimerTask>();
     }
 
     public void startCleanupTimer(Long chatId) {

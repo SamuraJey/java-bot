@@ -67,7 +67,7 @@ public class EventsCommand implements BotCommand {
 
         try {
             LOGS.info("loc [%s] free [%s] firstday [%s] secondday [%s]".formatted(location, isFree,firstDayTimestamp,secondDayTimestamp));
-            return apiHandler.getResponse(location, isFree,firstDayTimestamp,secondDayTimestamp);
+            return apiHandler.getResponse(location,isFree,firstDayTimestamp,secondDayTimestamp);
         } catch (Exception e) {
             LOGS.error("Error during handle [%s] by user [%s]".formatted(message, chatId), e);
             return "Что то пошло не так";

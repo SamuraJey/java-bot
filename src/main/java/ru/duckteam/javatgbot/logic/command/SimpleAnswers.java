@@ -2,7 +2,6 @@ package ru.duckteam.javatgbot.logic.command;
 
 import ru.duckteam.javatgbot.logic.UserStatus;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public class SimpleAnswers implements  ExpectedAnswers {
