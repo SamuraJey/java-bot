@@ -2,33 +2,20 @@ package ru.duckteam.javatgbot.logic;
 
 public final class BotResponse {
 
-    private final String userName;
-    private final Long userId;
     private final Long chatId;
-    private final Integer messageId;
+    private final String responeString;
 
-    public BotResponse(String userName, Long userId, Long chatId, Integer messageId) {
-        this.userName = userName;
-        this.userId = userId;
+    public BotResponse(Long chatId, String responeString) {
         this.chatId = chatId;
-        this.messageId = messageId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public Long getUserId() {
-        return userId;
+        this.responeString = responeString;
     }
 
     public Long getChatId() {
         return chatId;
     }
 
-    public Integer getMessageId() {
-        return messageId;
+    public String getResponeString() {
+        return responeString;
     }
 
 }
-

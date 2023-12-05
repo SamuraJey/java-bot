@@ -4,7 +4,7 @@
     <module name="java-bot" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="ru.duckteam.javatgbot.*" />
+        <option name="PATTERN" value="ru.duckteam.javatgbot.kudago.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
