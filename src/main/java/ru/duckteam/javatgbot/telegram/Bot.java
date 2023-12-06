@@ -16,7 +16,7 @@ import ru.duckteam.javatgbot.logic.MessageHandler;
 import ru.duckteam.javatgbot.logic.UserStatusService;
 import ru.duckteam.javatgbot.logic.command.EchoCommand;
 import ru.duckteam.javatgbot.logic.command.EventsCommand;
-import ru.duckteam.javatgbot.logic.command.StartCommand;
+import ru.duckteam.javatgbot.logic.command.answers.StartCommand;
 
 import java.util.List;
 

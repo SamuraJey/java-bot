@@ -1,25 +1,20 @@
 package ru.duckteam.javatgbot.logic.kudago;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class ApiHandler {
-    final JSONGetterFromURL getterFromURL = new JSONGetterFromURL();
-    final JSONParser jsonParser = new JSONParser();
 
     public String getResponse(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp)
             throws URISyntaxException, IOException {
 
-        // CreateURL url = new CreateURL();
-        UnpackerURL unpacker = new UnpackerURL(
-                CreateURL.getUrl(location, isFree, firstDayTimestamp, secondDayTimestamp));
-        String urlResponse = unpacker.readUrl();
-        JSONObject JSONResponse = getterFromURL.getJSONObject(urlResponse);
-        String[] titles = jsonParser.getValue(JSONResponse, "title");
-        String[] descriptions = jsonParser.getValue(JSONResponse, "description");
-        String[] site_url = jsonParser.getValue(JSONResponse, "site_url");
+        URLHandler urlHandler = new URLHandler(location, isFree, firstDayTimestamp, secondDayTimestamp);
+        String urlResponse = urlHandler.readUrl();
+
+        JSONParser jsonParser = new JSONParser(urlResponse);
+        String[] titles = jsonParser.getValue( "results","title");
+        String[] descriptions = jsonParser.getValue("results", "description");
+        String[] site_url = jsonParser.getValue("results", "site_url");
 
         for (int i = 0; i < titles.length; i++) {
             String firstLetter = titles[i].substring(0, 1).toUpperCase();

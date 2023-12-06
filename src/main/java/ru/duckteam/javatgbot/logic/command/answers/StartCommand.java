@@ -1,4 +1,4 @@
-package ru.duckteam.javatgbot.logic.command;
+package ru.duckteam.javatgbot.logic.command.answers;
 
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.logic.*;

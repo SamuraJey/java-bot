@@ -1,6 +1,8 @@
-package ru.duckteam.javatgbot.logic.command;
+package ru.duckteam.javatgbot.logic.command.answers;
 
 import ru.duckteam.javatgbot.logic.UserStatus;
+import ru.duckteam.javatgbot.logic.command.ExpectedAnswers;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.regex.Matcher;

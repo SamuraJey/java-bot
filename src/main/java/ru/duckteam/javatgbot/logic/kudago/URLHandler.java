@@ -3,15 +3,17 @@ package ru.duckteam.javatgbot.logic.kudago;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class CreateURL {
-    private static final long UNIX_DAY = 86400;
+public class URLHandler {
+    private static final Logger LOGS = LoggerFactory.getLogger(URLHandler.class);
+    private String urlString;
 
-    private static final Logger LOGS = LoggerFactory.getLogger(CreateURL.class);
-
-    public static String getUrl(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp) {
+    public URLHandler(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp) {
         // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи
         // кудаго
         String baseUrl = "https://kudago.com";
@@ -43,11 +45,27 @@ public class CreateURL {
             URI uri = new URI(baseUrl + endpoint)
                     .resolve(builder.build()).normalize();
 
-            url = uri.toString();
+            urlString = uri.toString();
         } catch (URISyntaxException e) {
             LOGS.error("Error while building URL: ", e);
         }
+    }
 
-        return url;
+    public String readUrl() throws URISyntaxException, IOException {
+        BufferedReader reader = null;
+        try {
+            URI url = new URI(urlString);
+            reader = new BufferedReader(new InputStreamReader(url.toURL().openStream()));
+            StringBuffer buffer = new StringBuffer();
+            int read;
+            char[] chars = new char[1024];
+            while ((read = reader.read(chars)) != -1) {
+                buffer.append(chars, 0, read);
+            }
+            return buffer.toString();
+        } finally {
+            if (reader != null)
+                reader.close();
+        }
     }
 }
