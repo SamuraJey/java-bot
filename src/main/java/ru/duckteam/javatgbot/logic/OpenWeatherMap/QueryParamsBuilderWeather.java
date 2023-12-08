@@ -8,20 +8,15 @@ public class QueryParamsBuilderWeather {
     private String units = "";
     private String lang = "ru";
 
-//    public QueryParamsBuilderWeather(String lat, String lon, String appid, String units, String lang) {
-//        this.lat = lat;
-//        this.lon = lon;
-//        this.appid = appid;
-//        this.units = units;
-//        this.lang = lang;
-//    }
+    public QueryParamsBuilderWeather(String lat, String lon, String appid) {
+        this.lat = lat;
+        this.lon = lon;
+        this.appid = appid;
+    }
 
     public String build() {
-
         // Добавьте параметры запроса в соответствии со спецификацией
-        String queryParams = "?lat=" + lat + "&lon=" + lon + "&mode=" + mode + "&appid=" + appid + "&units=" + units + "&lang=" + lang;
-
-        return queryParams;
+        return "?lat=" + lat + "&lon=" + lon + "&mode=" + mode + "&appid=" + appid + "&units=" + units + "&lang=" + lang;
     }
 
     public QueryParamsBuilderWeather lat(String lat) {

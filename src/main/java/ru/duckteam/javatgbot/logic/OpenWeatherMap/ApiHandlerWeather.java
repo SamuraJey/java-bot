@@ -1,5 +1,77 @@
 package ru.duckteam.javatgbot.logic.OpenWeatherMap;
 
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+public class ApiHandlerWeather {
+    private static final Logger LOGS = LoggerFactory.getLogger(ApiHandlerWeather.class);
+
+    public String getResponse() throws URISyntaxException, IOException {
+
+        URLHandlerWeather urlHandlerWeather = new URLHandlerWeather();
+        String urlResponse = urlHandlerWeather.readUrl();
+        LOGS.info(urlResponse);
+        JSONParserWeather jsonParser = new JSONParserWeather(urlResponse);
+        // JSON weather block
+        //String weatherId = jsonParser.getValue("weather", "id");
+        //String weatherMain = jsonParser.getValue("weather", "main");
+        //String weatherDescription = jsonParser.getValue("weather", "description");
+
+        // JSON wind block
+        //String windSpeed = jsonParser.getValue("wind", "speed");
+        //String windDeg = jsonParser.getValue("wind", "deg"); // Wind direction, IDK why in api it`s "deg"
+
+        // JSON clouds block
+        //String cloudsAll = jsonParser.getValue("clouds", "all");
+
+        // JSON main block
+        String mainTemperatureCurrent = jsonParser.getValue("main", "temp");
+        //String mainTemperatureFeelsLike = jsonParser.getValue("main", "feels_like");
+        //String mainPressure = jsonParser.getValue("main", "pressure");
+        //String mainHumidity = jsonParser.getValue("main", "humidity");
+
+        // JSON entities without blocks
+        //String visibility = jsonParser.getValue("visibility", "");
+
+        // TODO Понять и решить, что возвращать.
+        LOGS.info(mainTemperatureCurrent);
+        // TODO Нормальный ретерн чего нибулдь
+        return mainTemperatureCurrent;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*package ru.duckteam.javatgbot.logic.OpenWeatherMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,27 +86,28 @@ public class ApiHandlerWeather {
 
         URLHandlerWeather urlHandlerWeather = new URLHandlerWeather();
         String urlResponse = urlHandlerWeather.readUrl();
+        LOGS.info(urlResponse);
         JSONParserWeather jsonParser = new JSONParserWeather(urlResponse);
         // JSON weather block
-        String weatherId = jsonParser.getValue("weather", "id");
-        String weatherMain = jsonParser.getValue("weather", "main");
-        String weatherDescription = jsonParser.getValue("weather", "description");
+        //String weatherId = jsonParser.getValue("weather", "id");
+        //String weatherMain = jsonParser.getValue("weather", "main");
+        //String weatherDescription = jsonParser.getValue("weather", "description");
 
         // JSON wind block
-        String windSpeed = jsonParser.getValue("wind", "speed");
-        String windDeg = jsonParser.getValue("wind", "deg"); // Wind direction, IDK why in api it`s "deg"
+        //String windSpeed = jsonParser.getValue("wind", "speed");
+        //String windDeg = jsonParser.getValue("wind", "deg"); // Wind direction, IDK why in api it`s "deg"
 
         // JSON clouds block
-        String cloudsAll = jsonParser.getValue("clouds", "all");
+        //String cloudsAll = jsonParser.getValue("clouds", "all");
 
         // JSON main block
         String mainTemperatureCurrent = jsonParser.getValue("main", "temp");
-        String mainTemperatureFeelsLike = jsonParser.getValue("main", "feels_like");
-        String mainPressure = jsonParser.getValue("main", "pressure");
-        String mainHumidity = jsonParser.getValue("main", "humidity");
+        //String mainTemperatureFeelsLike = jsonParser.getValue("main", "feels_like");
+        //String mainPressure = jsonParser.getValue("main", "pressure");
+        //String mainHumidity = jsonParser.getValue("main", "humidity");
 
         // JSON entities without blocks
-        String visibility = jsonParser.getValue("visibility", "");
+        //String visibility = jsonParser.getValue("visibility", "");
 
         // TODO Понять и решить, что возвращать.
         LOGS.info(mainTemperatureCurrent);
@@ -42,4 +115,4 @@ public class ApiHandlerWeather {
         return mainTemperatureCurrent;
     }
 
-}
+}*/

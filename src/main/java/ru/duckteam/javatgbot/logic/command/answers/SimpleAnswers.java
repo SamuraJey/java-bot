@@ -1,10 +1,11 @@
-package ru.duckteam.javatgbot.logic.command;
+package ru.duckteam.javatgbot.logic.command.answers;
 
 import ru.duckteam.javatgbot.logic.UserStatus;
+import ru.duckteam.javatgbot.logic.command.ExpectedAnswers;
 
 import java.util.Map;
 
-public class SimpleAnswers implements  ExpectedAnswers {
+public class SimpleAnswers implements ExpectedAnswers {
     int startIndex = 0;
     int lastIndex = 1;
     private static final String[] questions =

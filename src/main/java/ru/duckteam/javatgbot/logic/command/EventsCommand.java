@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.logic.*;
 import ru.duckteam.javatgbot.logic.command.answers.DateAnswers;
+import ru.duckteam.javatgbot.logic.command.answers.SimpleAnswers;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
 
 import java.util.List;
@@ -22,7 +23,12 @@ public class EventsCommand implements BotCommand {
 
     @Override
     public boolean needExecute(String message, UserStatus userStatus, Long chatId) {
-        if (userStatus == null || !userStatus.getUserCommand().equals(eventsString) || userStatus.IsCommand(message)) {
+
+        if (userStatus == null) {
+            return false;
+        }
+
+        if (!userStatus.getUserCommand().equals(eventsString) || userStatus.IsCommand(message)) {
             if (eventsString.equals(message)) {
                 userStatusService.clearUserStatus(chatId);
                 userStatusService.setUserStatus(chatId, eventsString);
@@ -35,14 +41,10 @@ public class EventsCommand implements BotCommand {
 
     @Override
     public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus) {
-        try {
-            BotResponse response = new BotResponse(
-                    chatId,
-                    getApiAnswer(userStatus, message, chatId));
-            writer.writeAnswer(response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        BotResponse response = new BotResponse(
+                chatId,
+                getApiAnswer(userStatus, message, chatId));
+        writer.writeAnswer(response);
     }
 
     private String getApiAnswer(UserStatus userStatus, String message, Long chatId) {

@@ -1,4 +1,4 @@
-package ru.duckteam.javatgbot.logic.command.answers;
+package ru.duckteam.javatgbot.logic.command;
 
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.logic.*;
@@ -30,19 +30,15 @@ public class StartCommand implements BotCommand {
 
     @Override
     public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus) {
-        try {
-            BotResponse response = new BotResponse(
-                    chatId,
-                    getAnswer(message));
-            writer.writeAnswer(response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        BotResponse response = new BotResponse(
+                chatId,
+                getAnswer(message));
+        writer.writeAnswer(response);
     }
 
     private String getAnswer(String message) {
         if (message.equals(startString)) {
-            return "Напиши /echo или /events";
+            return "Напиши /echo или /events или /weather";
         }
         return "Напиши /start";
     }

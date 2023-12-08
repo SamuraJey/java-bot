@@ -26,14 +26,10 @@ public class EchoCommand implements BotCommand {
 
     @Override
     public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus) {
-        try {
-            BotResponse response = new BotResponse(
+        BotResponse response = new BotResponse(
                     chatId,
                     getAnswer(message));
-            writer.writeAnswer(response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        writer.writeAnswer(response);
     }
 
     private String getAnswer(String message) {

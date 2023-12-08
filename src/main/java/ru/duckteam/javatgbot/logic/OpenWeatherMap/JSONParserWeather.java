@@ -20,6 +20,7 @@ public class JSONParserWeather {
         if (jsonResponse == null) {
             return null;
         }
+
         String retValue;
         if (parentKey.equalsIgnoreCase("weather")) {
             retValue = jsonResponse.
@@ -30,8 +31,7 @@ public class JSONParserWeather {
             retValue = jsonResponse.getString(key);
         } else {
             retValue = jsonResponse.
-                    getJSONObject(parentKey).
-                    getString(key);
+                    getJSONObject(parentKey).getBigDecimal(key).toString();
         }
         return retValue;
     }

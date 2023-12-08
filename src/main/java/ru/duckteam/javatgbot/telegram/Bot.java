@@ -16,7 +16,8 @@ import ru.duckteam.javatgbot.logic.MessageHandler;
 import ru.duckteam.javatgbot.logic.UserStatusService;
 import ru.duckteam.javatgbot.logic.command.EchoCommand;
 import ru.duckteam.javatgbot.logic.command.EventsCommand;
-import ru.duckteam.javatgbot.logic.command.answers.StartCommand;
+import ru.duckteam.javatgbot.logic.command.StartCommand;
+import ru.duckteam.javatgbot.logic.command.WeatherCommand;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         EventsCommand eventsCommand = new EventsCommand(userStatusService);
         EchoCommand echoCommand = new EchoCommand(userStatusService);
         StartCommand startCommand = new StartCommand(userStatusService);
-        handler = new MessageHandler(userStatusService, List.of(echoCommand, eventsCommand, startCommand));
+        WeatherCommand weatherCommand = new WeatherCommand(userStatusService);
+        handler = new MessageHandler(userStatusService, List.of(echoCommand, eventsCommand, startCommand,weatherCommand));
     }
 
     @Override

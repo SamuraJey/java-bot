@@ -10,7 +10,7 @@ public class UserStatus {
     private String userCommand = "";
     private List<String> params;
     private int countQuestions = 0;
-    private final static String[] arrayCommands = { "/echo", "/events", "/start" };
+    private final static String[] arrayCommands = { "/echo", "/events", "/start", "/weather" };
 
     public UserStatus() {
         params = new ArrayList<>();
