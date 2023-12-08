@@ -1,7 +1,5 @@
 package ru.duckteam.javatgbot.logic.OpenWeatherMap;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JSONParserWeather {
@@ -17,11 +15,24 @@ public class JSONParserWeather {
         }
         this.jsonResponse = jsonResponse;
     }
-    public String getValue(String parentKey, String key) {
 
-        String retArr = new String();
-        JSONObject object = jsonResponse.getJSONObject(parentKey);
-        retArr = object.getBigDecimal(key).toString();
-        return retArr;
+    public String getValue(String parentKey, String key) {
+        if (jsonResponse == null) {
+            return null;
+        }
+        String retValue;
+        if (parentKey.equalsIgnoreCase("weather")) {
+            retValue = jsonResponse.
+                    getJSONArray(parentKey).
+                    getJSONObject(0).
+                    getString(key);
+        } else if (key.equalsIgnoreCase("")) {
+            retValue = jsonResponse.getString(key);
+        } else {
+            retValue = jsonResponse.
+                    getJSONObject(parentKey).
+                    getString(key);
+        }
+        return retValue;
     }
 }

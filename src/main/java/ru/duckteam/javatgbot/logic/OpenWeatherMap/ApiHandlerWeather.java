@@ -1,25 +1,45 @@
 package ru.duckteam.javatgbot.logic.OpenWeatherMap;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 
 public class ApiHandlerWeather {
-    static JSONParserWeather jsonParser;
+    //    private final JSONParserWeather jsonParser;
     private static final Logger LOGS = LoggerFactory.getLogger(ApiHandlerWeather.class);
 
     public String getResponse() throws URISyntaxException, IOException {
 
         URLHandlerWeather urlHandlerWeather = new URLHandlerWeather();
         String urlResponse = urlHandlerWeather.readUrl();
-        JSONParserWeather jsonParser= new JSONParserWeather(urlResponse);
-        String currentTemp = jsonParser.getValue("main", "temp");
+        JSONParserWeather jsonParser = new JSONParserWeather(urlResponse);
+        // JSON weather block
+        String weatherId = jsonParser.getValue("weather", "id");
+        String weatherMain = jsonParser.getValue("weather", "main");
+        String weatherDescription = jsonParser.getValue("weather", "description");
 
-        LOGS.info(currentTemp);
-        return currentTemp;
+        // JSON wind block
+        String windSpeed = jsonParser.getValue("wind", "speed");
+        String windDeg = jsonParser.getValue("wind", "deg"); // Wind direction, IDK why in api it`s "deg"
+
+        // JSON clouds block
+        String cloudsAll = jsonParser.getValue("clouds", "all");
+
+        // JSON main block
+        String mainTemperatureCurrent = jsonParser.getValue("main", "temp");
+        String mainTemperatureFeelsLike = jsonParser.getValue("main", "feels_like");
+        String mainPressure = jsonParser.getValue("main", "pressure");
+        String mainHumidity = jsonParser.getValue("main", "humidity");
+
+        // JSON entities without blocks
+        String visibility = jsonParser.getValue("visibility", "");
+
+        // TODO Понять и решить, что возвращать.
+        LOGS.info(mainTemperatureCurrent);
+        // TODO Нормальный ретерн чего нибулдь
+        return mainTemperatureCurrent;
     }
+
 }
