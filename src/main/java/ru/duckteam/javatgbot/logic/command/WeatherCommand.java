@@ -10,7 +10,7 @@ public class WeatherCommand implements BotCommand {
     private static final String weatherString = "/weather";
     private static final Logger LOGS = LoggerFactory.getLogger(WeatherCommand.class);
     private final UserStatusService userStatusService;
-    private final ApiHandlerWeather apiHandlerWeather = new ApiHandlerWeather();
+    private static final ApiHandlerWeather apiHandlerWeather = new ApiHandlerWeather();
 
 
 
@@ -46,7 +46,8 @@ public class WeatherCommand implements BotCommand {
     private String getApiAnswer(String message, Long chatId) {
         userStatusService.clearUserStatus(chatId);
         try {
-            return "Темпиратура воздуха сейчас " + apiHandlerWeather.getResponse();
+            String[] args = apiHandlerWeather.getResponse();
+            return "Сейчас " + args[0] + "\n" + "Температура воздуха " + args[1] + "\n" + "Ощущается как " + args[2] ;
         } catch (Exception e) {
             LOGS.error("Error during handle [%s] by user [%s]".formatted(message, chatId), e);
             return "Что то пошло не так";

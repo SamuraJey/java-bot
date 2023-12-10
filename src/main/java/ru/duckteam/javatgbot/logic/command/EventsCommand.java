@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.logic.*;
+import ru.duckteam.javatgbot.logic.OpenWeatherMap.ApiHandlerWeather;
 import ru.duckteam.javatgbot.logic.command.answers.DateAnswers;
 import ru.duckteam.javatgbot.logic.command.answers.SimpleAnswers;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
@@ -13,6 +14,7 @@ import java.util.List;
 public class EventsCommand implements BotCommand {
     private static final String eventsString = "/events";
     private static final ApiHandler apiHandler = new ApiHandler();
+    public static final ApiHandlerWeather apiHandlerWeather = new ApiHandlerWeather();
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
     private final UserStatusService userStatusService;
     private final List<ExpectedAnswers> expectedAnswers = List.of(new SimpleAnswers(),new DateAnswers());
