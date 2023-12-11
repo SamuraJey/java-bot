@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.duckteam.javatgbot.AnswerWriter;
 import ru.duckteam.javatgbot.logic.*;
-import ru.duckteam.javatgbot.logic.OpenWeatherMap.ApiHandlerWeather;
 import ru.duckteam.javatgbot.logic.command.answers.DateAnswers;
 import ru.duckteam.javatgbot.logic.command.answers.SimpleAnswers;
 import ru.duckteam.javatgbot.logic.kudago.ApiHandler;
