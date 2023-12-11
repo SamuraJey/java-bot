@@ -33,6 +33,11 @@ public class EchoCommand implements BotCommand {
     }
 
     private String getAnswer(String message) {
+
+        if (message == null){
+            return "Можно отпралять только текстовые сообшения!";
+        }
+
         if (message.equals(echoString)) {
             return "Выбран режим echo!";
         }

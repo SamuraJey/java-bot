@@ -37,6 +37,11 @@ public class StartCommand implements BotCommand {
     }
 
     private String getAnswer(String message) {
+
+        if (message == null){
+            return "Можно отпралять только текстовые сообшения!\nНапиши /start или другую команду";
+        }
+
         if (message.equals(startString)) {
             return "Напиши /echo или /events или /weather";
         }
