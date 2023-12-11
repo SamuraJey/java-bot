@@ -9,9 +9,10 @@ import java.net.URISyntaxException;
 public class ApiHandlerWeather {
     private static final Logger LOGS = LoggerFactory.getLogger(ApiHandlerWeather.class);
 
-    public String[] getResponse() throws URISyntaxException, IOException {
+    public String[] getResponse(double longitude, double latitude) throws URISyntaxException, IOException {
 
-        URLHandlerWeather urlHandlerWeather = new URLHandlerWeather();
+        URLHandlerWeather urlHandlerWeather;
+        urlHandlerWeather = new URLHandlerWeather(longitude, latitude);
         String urlResponse = urlHandlerWeather.readUrl();
         JSONParserWeather jsonParser = new JSONParserWeather(urlResponse);
         // JSON weather block
@@ -36,9 +37,9 @@ public class ApiHandlerWeather {
         //String visibility = jsonParser.getValue("visibility", "");
 
         // TODO Понять и решить, что возвращать.
-        LOGS.info(weatherDescription,mainTemperatureCurrent,mainTemperatureFeelsLike);
+        LOGS.info(weatherDescription, mainTemperatureCurrent, mainTemperatureFeelsLike);
         // TODO Нормальный ретерн чего нибулдь
-        return new String[] {weatherDescription,mainTemperatureCurrent,mainTemperatureFeelsLike};
+        return new String[]{weatherDescription, mainTemperatureCurrent, mainTemperatureFeelsLike};
     }
 }
 

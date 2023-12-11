@@ -13,19 +13,19 @@ import java.net.URISyntaxException;
 public class URLHandlerWeather {
     private static final Logger LOGS = LoggerFactory.getLogger(URLHandlerWeather.class);
     private static String urlString;
-    public URLHandlerWeather() {
-        // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи
-        // кудаго
+
+    public URLHandlerWeather(double longitude, double latitude) {
+        // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи опенвезер
+        // API Doc: https://openweathermap.org/current
         String baseUrl = "https://api.openweathermap.org/";
         String endpoint = "data/2.5/weather/";
         // Пользовательские значения
-        //long currentTimestamp = Instant.now().getEpochSecond();
-        String lat = "56.8519";
-        String lon = "60.6122";
+        String lat = String.valueOf(longitude);
+        String lon = String.valueOf(latitude);
         String appid = Secret.getWeatherApiKey();
         String units = "metric";
         String lang = "ru";
-        QueryParamsBuilderWeather builder = new QueryParamsBuilderWeather(lat,lon,appid).units(units).lang(lang);
+        QueryParamsBuilderWeather builder = new QueryParamsBuilderWeather(lat, lon, appid).units(units).lang(lang);
 
         try {
             URI uri = new URI(baseUrl + endpoint)
@@ -37,6 +37,7 @@ public class URLHandlerWeather {
         }
 
     }
+
 
     public String readUrl() throws URISyntaxException, IOException {
         BufferedReader reader = null;
