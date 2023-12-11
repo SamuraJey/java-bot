@@ -8,10 +8,7 @@ public class QueryParamsBuilderWeather {
     private String units = "";
     private String lang = "ru";
 
-    public QueryParamsBuilderWeather(String lat, String lon, String appid) {
-        this.lat = lat;
-        this.lon = lon;
-        this.appid = appid;
+    public QueryParamsBuilderWeather() {
     }
 
     public String build() {
