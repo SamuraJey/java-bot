@@ -3,13 +3,11 @@ package ru.duckteam.javatgbot.logic.command.answers;
 import ru.duckteam.javatgbot.logic.UserStatus;
 import ru.duckteam.javatgbot.logic.command.ExpectedAnswers;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
 
 public class WeatherSimpleAnswers implements ExpectedAnswers {
 
-    public static final String question = "Ты выбрал режим погоды, выбери город в котром будем сомтреть погоду, Екатеринбург или Москва?";
+    public static final String question = "Ты выбрал режим погоды, выбери город в котором будем смотреть погоду, Екатеринбург или Москва?";
     private static final String errorAnswer = "Введи еще раз, я не понял";
     private static final String[] expectedAnswers = {"Екатеринбург", "Москва"};
 
@@ -50,10 +48,10 @@ public class WeatherSimpleAnswers implements ExpectedAnswers {
         String secondExpectedAnswer = expectedAnswers[1];
 
         if (firstExpectedAnswer.trim().equalsIgnoreCase(param)) {
-            userStatus.setСityСoordinates(paramForApi.get(firstExpectedAnswer));
+            userStatus.setCityCoordinates(paramForApi.get(firstExpectedAnswer));
         } else {
             if (secondExpectedAnswer.trim().equalsIgnoreCase(param)) {
-                userStatus.setСityСoordinates(paramForApi.get(secondExpectedAnswer));
+                userStatus.setCityCoordinates(paramForApi.get(secondExpectedAnswer));
             } else {
                 invalidMessage = true;
             }
