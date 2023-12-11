@@ -16,8 +16,8 @@ public class WeatherCommand implements BotCommand {
     private static final String weatherString = "/weather";
     private static final Logger LOGS = LoggerFactory.getLogger(WeatherCommand.class);
     private static final ApiHandlerWeather apiHandlerWeather = new ApiHandlerWeather();
+    private static final ExpectedAnswers expectedAnswer = new WeatherSimpleAnswers();
     private final UserStatusService userStatusService;
-    private final List<ExpectedAnswers> expectedAnswers = List.of(new WeatherSimpleAnswers());
 
 
     public WeatherCommand(UserStatusService userStatusService) {
@@ -52,16 +52,15 @@ public class WeatherCommand implements BotCommand {
 
     private String getApiAnswer(UserStatus userStatus, String message, Long chatId) {
 
-        for (ExpectedAnswers expectedAnswer : expectedAnswers) {
-            if (expectedAnswer.needSetParam(userStatus.getWeatherCountQuestions())) {
-                expectedAnswer.setParam(message, userStatus);
-            }
-            if (expectedAnswer.hasOtherQuestions()) {
-                return expectedAnswer.getQuestions(userStatus);
-            }
+        if (expectedAnswer.needSetParam(userStatus.getWeatherCountQuestions())) {
+            expectedAnswer.setParam(message, userStatus);
         }
-        double latitude = userStatus.getUserLatitude();
-        double longitude = userStatus.getUserLongitude();
+        if (expectedAnswer.hasOtherQuestions()) {
+            return expectedAnswer.getQuestions(userStatus);
+        }
+
+        double latitude = userStatus.getUserLatItude();
+        double longitude = userStatus.getUserLongItude();
         userStatusService.clearUserStatus(chatId);
         try {
             String[] args = apiHandlerWeather.getResponse(latitude, longitude);

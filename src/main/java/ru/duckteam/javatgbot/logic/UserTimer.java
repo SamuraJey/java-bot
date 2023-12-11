@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 public class UserTimer {
 
-    private static final long CLEANUP_DELAY = 1000 * 60 * 60 * 24 * 7; // 1 week in milliseconds
+    private static final long CLEANUP_DELAY = 1000 * 60 * 5;//60 * 24 //* 7; // 1 week in milliseconds
     private static final Timer timer = new Timer();
     private final UserStatusService userStatusService;
     private final Map<Long, TimerTask> userTimerTask = new HashMap<>();

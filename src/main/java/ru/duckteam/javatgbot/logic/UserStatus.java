@@ -14,10 +14,7 @@ public class UserStatus {
 
     private int weatherCountQuestions = 0;
 
-    private String weatherCity;
-    private double userLongitude;
-
-    private double userLatitude;
+    private double[] сityСoordinates = {0,0};
 
     public UserStatus() {
         params = new ArrayList<>();
@@ -51,30 +48,16 @@ public class UserStatus {
     public void setUserCommand(String userCommand) {
         this.userCommand = userCommand;
     }
+    public void setСityСoordinates(double[] coordinates) {
+        this.сityСoordinates = coordinates;
+    }
 
     public void addParam(String param) {
         params.add(param);
     }
+    public double getUserLongItude() { return сityСoordinates[1];}
 
-    public void setWeatherCity(String city) {
-        this.weatherCity = city;
-    }
-
-    public double getUserLongitude() {
-        return userLongitude;
-    }
-
-    public void setUserLongitude(double userLongitude) {
-        this.userLongitude = userLongitude;
-    }
-
-    public double getUserLatitude() {
-        return userLatitude;
-    }
-
-    public void setUserLatitude(double userLatitude) {
-        this.userLatitude = userLatitude;
-    }
+    public double getUserLatItude() { return сityСoordinates[0]; }
 
     public boolean IsCommand(String command) {
         return Arrays.asList(arrayCommands).contains(command);
@@ -96,8 +79,7 @@ public class UserStatus {
         params = new ArrayList<>();
         countQuestions = 0;
         weatherCountQuestions = 0;
-//        userLongitude = 0;
-//        userLatitude = 0;
+        сityСoordinates = new double[]{0, 0};
 
     }
 

@@ -3,15 +3,16 @@ package ru.duckteam.javatgbot.logic.command.answers;
 import ru.duckteam.javatgbot.logic.UserStatus;
 import ru.duckteam.javatgbot.logic.command.ExpectedAnswers;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
 public class WeatherSimpleAnswers implements ExpectedAnswers {
 
-    public static final String questions = "Ты выбрал режим погоды, выбери город в котром будем сомтреть погоду, Екатеринбург или Москва?";
+    public static final String question = "Ты выбрал режим погоды, выбери город в котром будем сомтреть погоду, Екатеринбург или Москва?";
     private static final String errorAnswer = "Введи еще раз, я не понял";
-    private static final Set<String> expectedAnswers = Set.of("Екатеринбург", "Москва");
-    ;
+    private static final String[] expectedAnswers = {"Екатеринбург", "Москва"};
+
     private static final Map<String, double[]> paramForApi = Map.of(
             "Екатеринбург", new double[]{56.838011, 60.597474},
             "Москва", new double[]{55.755864, 37.617698}
@@ -23,13 +24,13 @@ public class WeatherSimpleAnswers implements ExpectedAnswers {
 
     @Override
     public boolean hasOtherQuestions() {
-        return (startIndex <= currentQuestion && currentQuestion < lastIndex) || invalidMessage;
+        return currentQuestion == startIndex || invalidMessage;
     }
 
     @Override
     public boolean needSetParam(int currentQuestion) {
         this.currentQuestion = currentQuestion;
-        return startIndex + 1 <= currentQuestion && currentQuestion <= lastIndex + 1;
+        return currentQuestion == lastIndex;
     }
 
     @Override
@@ -39,21 +40,23 @@ public class WeatherSimpleAnswers implements ExpectedAnswers {
             return errorAnswer;
         }
         userStatus.plusOneWeatherCountQuestions();
-        return questions;
+        return question;
     }
 
     @Override
     public void setParam(String param, UserStatus userStatus) {
-        double[] answer = paramForApi.get(param);
-        // TODO Сделать обработку неккоректного ввода
-        // Если мы у мапы запрашиваем несущствующий ключ, она вернет null, наверное как-то через это можно сделать??
-        if (answer == null) {
-            invalidMessage = true;
-            this.getQuestions(userStatus);
+
+        String firstExpectedAnswer = expectedAnswers[0];
+        String secondExpectedAnswer = expectedAnswers[1];
+
+        if (firstExpectedAnswer.trim().equalsIgnoreCase(param)) {
+            userStatus.setСityСoordinates(paramForApi.get(firstExpectedAnswer));
+        } else {
+            if (secondExpectedAnswer.trim().equalsIgnoreCase(param)) {
+                userStatus.setСityСoordinates(paramForApi.get(secondExpectedAnswer));
+            } else {
+                invalidMessage = true;
+            }
         }
-        double latitude = answer[0];
-        double longitude = answer[1];
-        userStatus.setUserLatitude(latitude);
-        userStatus.setUserLongitude(longitude);
     }
 }
