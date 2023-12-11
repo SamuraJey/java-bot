@@ -3,15 +3,17 @@ package ru.duckteam.javatgbot.logic.kudago;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 
-public class CreateURL {
-    private static final long UNIX_DAY = 86400;
+public class URLHandler {
+    private static final Logger LOGS = LoggerFactory.getLogger(URLHandler.class);
+    private URI uriAddress;
 
-    private static final Logger LOGS = LoggerFactory.getLogger(CreateURL.class);
-
-    public static String getUrl(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp) {
+    public URLHandler(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp) {
         // Если запустить программу отсюда, то она выдаст нам URL с запросом к апи
         // кудаго
         String baseUrl = "https://kudago.com";
@@ -25,10 +27,9 @@ public class CreateURL {
                 "site_url";
         String orderBy = "date";
         String textFormat = "plain";
-        // String location = "ekb";
-        String actualSince = String.valueOf(firstDayTimestamp);
-        String actualUntil = String.valueOf(secondDayTimestamp);
-        String url = "";
+//        String location = "ekb";
+//        long actualSince = firstDayTimestamp;
+//        long actualUntil = secondDayTimestamp;
         QueryParamsBuilder builder = new QueryParamsBuilder()
                 .lang(lang)
                 .fields(fields)
@@ -36,18 +37,20 @@ public class CreateURL {
                 .textFormat(textFormat)
                 .location(location)
                 .isFree(isFree)
-                .actualSince(Integer.parseInt(actualSince))
-                .actualUntil(Integer.parseInt(actualUntil));
-        // TODO разобраться почему так парсится из лонг в стриг и в инт
+                .actualSince((int) firstDayTimestamp)
+                .actualUntil((int) secondDayTimestamp);
         try {
-            URI uri = new URI(baseUrl + endpoint)
-                    .resolve(builder.build()).normalize();
-
-            url = uri.toString();
+            uriAddress = new URI(baseUrl + endpoint).resolve(builder.build()).normalize();
+            LOGS.info(String.valueOf(uriAddress));
         } catch (URISyntaxException e) {
             LOGS.error("Error while building URL: ", e);
         }
+    }
 
-        return url;
+    public String readUrl() throws IOException {
+        try (InputStream inputStream = uriAddress.toURL().openStream()) {
+            byte[] bytes = inputStream.readAllBytes();
+            return new String(bytes, StandardCharsets.UTF_8);
+        }
     }
 }

@@ -24,7 +24,6 @@ public class MessageHandler implements Handler {
         UserStatus userStatus = userStatusService.getUserData(request.getChatId());
         for (BotCommand command : commands) {
             if (command.needExecute(request.getMessage(), userStatus, request.getChatId())) {
-                // userStatusService.startCleanupTimer(request.getChatId());
                 userTimer.startCleanupTimer(request.getChatId());
                 command.execute(request.getMessage(), request.getChatId(), writer, userStatus);
                 break;
