@@ -37,7 +37,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
         EchoCommand echoCommand = new EchoCommand(userStatusService);
         StartCommand startCommand = new StartCommand(userStatusService);
         WeatherCommand weatherCommand = new WeatherCommand(userStatusService);
-        handler = new MessageHandler(userStatusService, List.of(echoCommand, eventsCommand, startCommand,weatherCommand));
+        handler = new MessageHandler(userStatusService, List.of(echoCommand, eventsCommand, startCommand, weatherCommand));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Bot extends TelegramLongPollingBot implements AnswerWriter {
                     .chatId(response.getChatId().toString()) //Who are we sending a message to
                     .text("что-то пошло не так").build();
             LOGS.error("can't send empty message", e);
-            // TODO Хотим чтоб при неккоректный ввод, апи возвращал в респонс налл, а о респонс проверял на налл и давал текст ошибки
+            //??? TODO Хотим чтоб при неккоректный ввод, апи возвращал в респонс налл, а о респонс проверял на налл и давал текст ошибки
             try {
                 execute(sm);
             } catch (TelegramApiException ex) {

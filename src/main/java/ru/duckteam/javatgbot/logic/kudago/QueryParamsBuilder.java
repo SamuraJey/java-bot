@@ -44,7 +44,7 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public QueryParamsBuilder pageSize(int pageSize) { // page size is int?
+    public QueryParamsBuilder pageSize(int pageSize) {
         this.pageSize = pageSize;
         return this;
     }
@@ -113,7 +113,7 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public QueryParamsBuilder radius(int radius) { // raduis is int?
+    public QueryParamsBuilder radius(int radius) { // radius is int?
         this.radius = radius;
         return this;
     }

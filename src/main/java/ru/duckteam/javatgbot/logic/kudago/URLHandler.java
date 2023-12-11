@@ -27,10 +27,9 @@ public class URLHandler {
                 "site_url";
         String orderBy = "date";
         String textFormat = "plain";
-        // String location = "ekb";
+//        String location = "ekb";
 //        long actualSince = firstDayTimestamp;
 //        long actualUntil = secondDayTimestamp;
-        String url = "";
         QueryParamsBuilder builder = new QueryParamsBuilder()
                 .lang(lang)
                 .fields(fields)

@@ -14,10 +14,9 @@ import java.util.List;
 public class EventsCommand implements BotCommand {
     private static final String eventsString = "/events";
     private static final ApiHandler apiHandler = new ApiHandler();
-    public static final ApiHandlerWeather apiHandlerWeather = new ApiHandlerWeather();
     private static final Logger LOGS = LoggerFactory.getLogger(MessageHandler.class);
     private final UserStatusService userStatusService;
-    private final List<ExpectedAnswers> expectedAnswers = List.of(new SimpleAnswers(),new DateAnswers());
+    private final List<ExpectedAnswers> expectedAnswers = List.of(new SimpleAnswers(), new DateAnswers());
 
     public EventsCommand(UserStatusService userStatusService) {
         this.userStatusService = userStatusService;
@@ -51,10 +50,10 @@ public class EventsCommand implements BotCommand {
 
     private String getApiAnswer(UserStatus userStatus, String message, Long chatId) {
 
-        for (ExpectedAnswers expectedAnswer: expectedAnswers) {
+        for (ExpectedAnswers expectedAnswer : expectedAnswers) {
 
             if (expectedAnswer.needSetParam(userStatus.getCountQuestions())) {
-                expectedAnswer.setParam(message,userStatus);
+                expectedAnswer.setParam(message, userStatus);
             }
 
             if (expectedAnswer.hasOtherQuestions()) {
@@ -70,8 +69,8 @@ public class EventsCommand implements BotCommand {
         //userStatusService.setUserStatus(chatId,"/start");
 
         try {
-            LOGS.info("loc [%s] free [%s] firstday [%s] secondday [%s]".formatted(location, isFree,firstDayTimestamp,secondDayTimestamp));
-            return apiHandler.getResponse(location,isFree,firstDayTimestamp,secondDayTimestamp);
+            LOGS.info("loc [%s] free [%s] firstday [%s] secondday [%s]".formatted(location, isFree, firstDayTimestamp, secondDayTimestamp));
+            return apiHandler.getResponse(location, isFree, firstDayTimestamp, secondDayTimestamp);
         } catch (Exception e) {
             LOGS.error("Error during handle [%s] by user [%s]".formatted(message, chatId), e);
             return "Что то пошло не так";
