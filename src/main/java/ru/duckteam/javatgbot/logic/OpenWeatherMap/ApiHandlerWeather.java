@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 public class ApiHandlerWeather {
     private static final Logger LOGS = LoggerFactory.getLogger(ApiHandlerWeather.class);
 
-    public String[] getResponse(double longitude, double latitude) throws URISyntaxException, IOException {
+    public String[] getResponse(double longitude, double latitude) throws IOException {
 
         URLHandlerWeather urlHandlerWeather;
         urlHandlerWeather = new URLHandlerWeather(longitude, latitude);

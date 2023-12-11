@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 public class ApiHandler {
 
     public String getResponse(String location, boolean isFree, long firstDayTimestamp, long secondDayTimestamp)
-            throws URISyntaxException, IOException {
+            throws IOException {
 
         URLHandler urlHandler = new URLHandler(location, isFree, firstDayTimestamp, secondDayTimestamp);
         String urlResponse = urlHandler.readUrl();
