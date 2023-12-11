@@ -10,8 +10,6 @@ import ru.duckteam.javatgbot.logic.UserStatus;
 import ru.duckteam.javatgbot.logic.UserStatusService;
 import ru.duckteam.javatgbot.logic.command.answers.WeatherSimpleAnswers;
 
-import java.util.List;
-
 public class WeatherCommand implements BotCommand {
     private static final String weatherString = "/weather";
     private static final Logger LOGS = LoggerFactory.getLogger(WeatherCommand.class);
@@ -59,8 +57,8 @@ public class WeatherCommand implements BotCommand {
             return expectedAnswer.getQuestions(userStatus);
         }
 
-        double latitude = userStatus.getUserLatItude();
-        double longitude = userStatus.getUserLongItude();
+        double latitude = userStatus.getUserLatitude();
+        double longitude = userStatus.getUserLongitude();
         userStatusService.clearUserStatus(chatId);
         try {
             String[] args = apiHandlerWeather.getResponse(latitude, longitude);

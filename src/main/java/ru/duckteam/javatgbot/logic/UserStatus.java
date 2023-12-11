@@ -14,7 +14,7 @@ public class UserStatus {
 
     private int weatherCountQuestions = 0;
 
-    private double[] сityСoordinates = {0,0};
+    private double[] cityCoordinates = {0, 0};
 
     public UserStatus() {
         params = new ArrayList<>();
@@ -48,16 +48,22 @@ public class UserStatus {
     public void setUserCommand(String userCommand) {
         this.userCommand = userCommand;
     }
-    public void setСityСoordinates(double[] coordinates) {
-        this.сityСoordinates = coordinates;
+
+    public void setCityCoordinates(double[] coordinates) {
+        this.cityCoordinates = coordinates;
     }
 
     public void addParam(String param) {
         params.add(param);
     }
-    public double getUserLongItude() { return сityСoordinates[1];}
 
-    public double getUserLatItude() { return сityСoordinates[0]; }
+    public double getUserLongitude() {
+        return cityCoordinates[1];
+    }
+
+    public double getUserLatitude() {
+        return cityCoordinates[0];
+    }
 
     public boolean IsCommand(String command) {
         return Arrays.asList(arrayCommands).contains(command);
@@ -79,8 +85,7 @@ public class UserStatus {
         params = new ArrayList<>();
         countQuestions = 0;
         weatherCountQuestions = 0;
-        сityСoordinates = new double[]{0, 0};
-
+        cityCoordinates = new double[]{0, 0};
     }
 
     public void deleteUserCommand() {
@@ -88,7 +93,6 @@ public class UserStatus {
     }
 
     private long FromDateInLong(String date) {
-
         int day = Integer.parseInt(date.substring(0, 2));
         int month = Integer.parseInt(date.substring(3, 5));
         int year = Integer.parseInt(date.substring(6, 10));
