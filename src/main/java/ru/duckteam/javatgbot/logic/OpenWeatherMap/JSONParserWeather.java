@@ -20,19 +20,16 @@ public class JSONParserWeather {
         if (jsonResponse == null) {
             return null;
         }
-
-        String retValue;
         if (parentKey.equalsIgnoreCase("weather")) {
-            retValue = jsonResponse.
-                    getJSONArray(parentKey).
-                    getJSONObject(0).
-                    getString(key);
-        } else if (key.equalsIgnoreCase("")) {
-            retValue = jsonResponse.getString(key);
+            return jsonResponse.getJSONArray(parentKey)
+                    .getJSONObject(0)
+                    .getString(key);
+        } else if (key.isEmpty()) {
+            return jsonResponse.getString(key);
         } else {
-            retValue = jsonResponse.
-                    getJSONObject(parentKey).getBigDecimal(key).toString();
+            return jsonResponse.getJSONObject(parentKey)
+                    .getBigDecimal(key)
+                    .toString();
         }
-        return retValue;
     }
 }

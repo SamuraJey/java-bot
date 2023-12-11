@@ -1,7 +1,10 @@
 package ru.duckteam.javatgbot.logic.command;
 
-import ru.duckteam.javatgbot.logic.*;
 import ru.duckteam.javatgbot.AnswerWriter;
+import ru.duckteam.javatgbot.logic.BotCommand;
+import ru.duckteam.javatgbot.logic.BotResponse;
+import ru.duckteam.javatgbot.logic.UserStatus;
+import ru.duckteam.javatgbot.logic.UserStatusService;
 
 public class EchoCommand implements BotCommand {
     private static final String echoString = "/echo";
@@ -27,15 +30,15 @@ public class EchoCommand implements BotCommand {
     @Override
     public void execute(String message, Long chatId, AnswerWriter writer, UserStatus userStatus) {
         BotResponse response = new BotResponse(
-                    chatId,
-                    getAnswer(message));
+                chatId,
+                getAnswer(message));
         writer.writeAnswer(response);
     }
 
     private String getAnswer(String message) {
 
-        if (message == null){
-            return "Можно отпралять только текстовые сообшения!";
+        if (message == null) {
+            return "Можно отправлять только текстовые сообщения!";
         }
 
         if (message.equals(echoString)) {

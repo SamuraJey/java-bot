@@ -15,10 +15,10 @@ public class JSONParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-         this.jsonResponse = jsonResponse;
+        this.jsonResponse = jsonResponse;
     }
-    public String[] getValue(String parentKey,String key) {
 
+    public String[] getValue(String parentKey, String key) {
         if (jsonResponse == null) {
             return null;
         }
@@ -26,8 +26,7 @@ public class JSONParser {
         String[] retArr = new String[resultsJSONArray.length()];
         for (int i = 0; i < resultsJSONArray.length(); i++) {
             JSONObject event = resultsJSONArray.getJSONObject(i);
-            String keyValue = event.getString(key);
-            retArr[i] = keyValue;
+            retArr[i] = event.getString(key);
         }
         return retArr;
     }

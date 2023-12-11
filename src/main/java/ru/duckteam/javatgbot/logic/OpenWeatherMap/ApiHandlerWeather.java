@@ -36,9 +36,9 @@ public class ApiHandlerWeather {
         // JSON entities without blocks
         //String visibility = jsonParser.getValue("visibility", "");
 
-        // TODO Понять и решить, что возвращать.
+
         LOGS.info(weatherDescription, mainTemperatureCurrent, mainTemperatureFeelsLike);
-        // TODO Нормальный ретерн чего нибулдь
+
         return new String[]{weatherDescription, mainTemperatureCurrent, mainTemperatureFeelsLike};
     }
 }

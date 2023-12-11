@@ -12,7 +12,7 @@ public class ApiHandler {
         String urlResponse = urlHandler.readUrl();
 
         JSONParser jsonParser = new JSONParser(urlResponse);
-        String[] titles = jsonParser.getValue( "results","title");
+        String[] titles = jsonParser.getValue("results", "title");
         String[] descriptions = jsonParser.getValue("results", "description");
         String[] site_url = jsonParser.getValue("results", "site_url");
 
