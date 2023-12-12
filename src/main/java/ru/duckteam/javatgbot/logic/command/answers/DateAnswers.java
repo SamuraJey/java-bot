@@ -54,7 +54,7 @@ public class DateAnswers implements ExpectedAnswers {
 
     public boolean isValid(String date) {
         Matcher matcher = pattern.matcher(date);
-
+        // TODO Сделать, что бы оно возращало не булеан, а уже готовую приятную строку\структуру\объект.
         if (matcher.matches()) {
             matcher.reset();
 
